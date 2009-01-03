@@ -108,7 +108,7 @@ TweensyZero.stop(myInstance1);</code>
 TweensyZero.resume();</code>
 
 <h3>Time based vs Frame based.</h3>
-<p>By default TweensyZero uses time based animations, this ensures that tweens end precisely in the time you define. Movieclip animations created in the Flash IDE are frame based and TweensyZero offers an option to use this mode also. When using frame based animations you can define how many seconds per frame are applied on each ENTER_FRAME. So if you wanted to match the FLA frame rate of 30FPS the SPF would be 1/30. Or if you wanted to double the frame rate this would be (1/30)*2.</p>
+<p>By default TweensyZero uses time based animations, this ensures that tweens end precisely in the time you define. Movieclip animations created in the Flash IDE are frame based and TweensyZero offers an option to use this mode also. When using frame based animations you can define how many seconds per frame are applied on each ENTER_FRAME. So if you wanted to match the FLA frame rate of 30FPS the SPF would be 1/30. Or if you wanted to double the frame rate this would be (1/30) multiplied by 2.</p>
 
 <code>TweensyZero.refreshType = TweensyZero.FRAME;
 TweensyZero.secondsPerFrame = 1/30;</code>
