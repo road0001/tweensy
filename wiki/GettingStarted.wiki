@@ -12,7 +12,7 @@ and a beta expansion package TweensyFX</p>
 <h3>TweensyZero (2.9KB compiled)</h3>
 <p>Tweensy Zero is a light weight version of TweensyOriginal this product is intended for users who are file size conscious.</p>
 
-<h3>TweensyFX (beta)</h3>
+<h3>TweensyFX (preview)</h3>
 <p>Is a beta expansion to TweensyOriginal allowing for motion effects to be applied to animations.
 This includes directional motion blurring, pixelation, xray, bulge/dent displacements, reflection, rgb channel splitting and bump mapping.</p>
 
