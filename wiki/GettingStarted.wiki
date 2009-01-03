@@ -24,13 +24,13 @@ This includes directional motion blurring, pixelation, xray, bulge/dent displace
 
 <h2>How to get Tweensy</h2>
 <p>The latest version of Tweensy can be retrieved from it's code.google address.
-Project Home : http://code.google.com/p/tweensy/
+Project Home : http://code.google.com/p/tweensy/<br/>
 SVN : http://tweensy.googlecode.com/svn/trunk/</p>
 
 <p>Once Tweensy is downloaded the releases folder will contain the various Tweensy products these are :
 <ul><li>zero</li>
-<li>original/li>
-<li>fx/li></ul>
+<li>original</li>
+<li>fx</li></ul>
 </p>
 <p>Tweensy can be used in either as either a pre-compiled SWC or Actionscript source code which is contained in each of these product folders.</p>
 
