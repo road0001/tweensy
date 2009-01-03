@@ -57,24 +57,21 @@ Click the plus icon and select the folder containing the source code.</p>
 <p>Is an animation which goes from the instances current position to the destination defined in the 'to' Object.</p>
 <code>import com.flashdynamix.motion.TweensyZero;
 
-TweensyZero.to(myInstance, {x:500});
-</code>
+TweensyZero.to(myInstance, {x:500});</code>
 <p>This will animate 'myInstance' from it's current x to the x position of 500.</p>
 
 <h3>A 'from' tween</h3>
 <p>Is the opposite of a to based tween. It is an animation which goes from the destination defined in the 'from' Object to the instances current position.</p>
 <code>import com.flashdynamix.motion.TweensyZero;
 
-TweensyZero.from(myInstance, {x:500});
-</code>
+TweensyZero.from(myInstance, {x:500});</code>
 <p>This will animate 'myInstance' from the x position 500 to it's current x position.</p>
 
 <h3>A 'fromTo' tween</h3>
 <p>Is using the features of both to and from based tweens. It is an animation which goes from the destination defined in the 'from' Object and to the destination defined in the 'to' Object.</p>
 <code>import com.flashdynamix.motion.TweensyZero;
 
-TweensyZero.fromTo(myInstance, {x:0}, {x:500});
-</code>
+TweensyZero.fromTo(myInstance, {x:0}, {x:500});</code>
 <p>This will animate 'myInstance' from the x position of 0 to the x position of 500.</p>
 
 <hr/>
@@ -104,74 +101,74 @@ TweensyZero.stop(myInstance1);</code>
 <code>TweensyZero.stop([myInstance1, myInstance2], "x");</code>
 <p>Stops tweens for the x property for myInstance1 and myInstance2</p>
 
-Pausing and resuming a tween
-Allows for pausing and resuming all tweens executed by TweensyZero.
+<h3>Pausing and resuming a tween</h3>
+<p>Allows for pausing and resuming all tweens executed by TweensyZero.</p>
 
-TweensyZero.pause();
-TweensyZero.resume();
+<code>TweensyZero.pause();
+TweensyZero.resume();</code>
 
-Time based vs Frame based.
-By default TweensyZero uses time based animations, this ensures that tweens end precisely in the time you define. Movieclip animations created in the Flash IDE are frame based and TweensyZero offers an option to use this mode also. When using frame based animations you can define how many seconds per frame are applied on each ENTER_FRAME. So if you wanted to match the FLA frame rate of 30FPS the SPF would be 1/30. Or if you wanted to double the frame rate this would be (1/30)*2.
+<h3>Time based vs Frame based.</h3>
+<p>By default TweensyZero uses time based animations, this ensures that tweens end precisely in the time you define. Movieclip animations created in the Flash IDE are frame based and TweensyZero offers an option to use this mode also. When using frame based animations you can define how many seconds per frame are applied on each ENTER_FRAME. So if you wanted to match the FLA frame rate of 30FPS the SPF would be 1/30. Or if you wanted to double the frame rate this would be (1/30)*2.</p>
 
-TweensyZero.refreshType = TweensyZero.FRAME;
-TweensyZero.secondsPerFrame = 1/30;
+<code>TweensyZero.refreshType = TweensyZero.FRAME;
+TweensyZero.secondsPerFrame = 1/30;</code>
 
-__________________________________________________________________________________________________________________
+<hr/>
 
-Other things to know about tweens
-When a to, from or fromTo tween is defined it returns an instance of TweensyTimelineZero this contains the parameters of this tween which you may modify during the tweens animation for further control over the tween.
+<h2>Other things to know about tweens</h2>
+<p>When a to, from or fromTo tween is defined it returns an instance of TweensyTimelineZero this contains the parameters of this tween which you may modify during the tweens animation for further control over the tween.</h2>
 
-Using timelines
-When a to, from or fromTo tween is defined it will return an instance of TweensyTImelineZero. Using TweensyTImelineZero allows for defining parameters which are not in the to, from and fromTo method as well as updating properties during the tweens animation. 
+<h3>Using timelines</h3>
+<p>When a to, from or fromTo tween is defined it will return an instance of TweensyTImelineZero. Using TweensyTImelineZero allows for defining parameters which are not in the to, from and fromTo method as well as updating properties during the tweens animation. </p>
 
-import com.flashdynamix.motion.*;
+<code>import com.flashdynamix.motion.*;
 
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
-timeline.duration = 3.5;
+timeline.duration = 3.5;</code>
 
-This will animate 'myInstance' from it's current x to the x position of 500 in 3.5 seconds rather than the initially defined 2 seconds.
+<p>This will animate 'myInstance' from it's current x to the x position of 500 in 3.5 seconds rather than the initially defined 2 seconds.</p>
 
-Timelines offer a lot more functionality which will be described in further detail below.
+<p>Timelines offer a lot more functionality which will be described in further detail below.</p>
 
-Relative and random range positions
-The properties in the to and from Objects allow for you to define a relative position or random range positions.
-{x:"500"} will offset the x by +500.
-{x:"-500"} will offset the x by -500.
-{x:"250,500"} will offset the x by a random number between +250 and +500.
+<h3>Relative and random range positions</h3>
+<p>The properties in the to and from Objects allow for you to define a relative position or random range positions.</p>
+<p>{x:"500"} will offset the x by +500.<br/>
+{x:"-500"} will offset the x by -500.<br/>
+{x:"250,500"} will offset the x by a random number between +250 and +500.</p>
 
-Using ease equations
-Ease equations change the style of movement from point A to point B.
-TweensyZero supports all the ease equations provided via Adobe in the fl.motion.easing package and these have been provided as a part of the TweensyZero library. By default TweensyZero will use the ease equation Quintic.easeOut if null or no parameter is provided.
+<h3>Using ease equations</h3>
+<p>Ease equations change the style of movement from point A to point B.
+TweensyZero supports all the ease equations provided via Adobe in the fl.motion.easing package and these have been provided as a part of the TweensyZero library. By default TweensyZero will use the ease equation Quintic.easeOut if null or no parameter is provided.</p>
 
-import com.flashdynamix.motion.TweensyZero;
+<code>import com.flashdynamix.motion.TweensyZero;
 import fl.motion.easing.Sine.easeOut;
 
-TweensyZero.to(myInstance, {x:500}, 2.0, Sine.easeOut);
+TweensyZero.to(myInstance, {x:500}, 2.0, Sine.easeOut);</code>
 
-This will animate 'myInstance' from its current x to the x position of 500 in 2 seconds using the Sine.easeOut equation.
+<p>This will animate 'myInstance' from its current x to the x position of 500 in 2 seconds using the Sine.easeOut equation.</p>
 
-Additional parameters for ease equations
-The ease equations Back and Elastic are considered special ease equations because they allow additional parameters to be defined to modify the easing equation. TweensyTimelineZero allows you to define parameters to control this.
+<h3>Additional parameters for ease equations</h3>
+<p>The ease equations Back and Elastic are considered special ease equations because they allow additional parameters to be defined to modify the easing equation. TweensyTimelineZero allows you to define parameters to control this.</p>
 
-import com.flashdynamix.motion.*;
+<code>import com.flashdynamix.motion.*;
 import fl.motion.easing.Back.easeOut;
 
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0, Back.easeOut);
-timeline.easeParams = [0.7];
+timeline.easeParams = [0.7];</code>
 
-This will animate 'myInstance' from it's current x to the x position of 500 in 2 seconds using the Back.easeOut equation and dampen the overshoot of the equation by a factor of 0.7.
+<p>This will animate 'myInstance' from it's current x to the x position of 500 in 2 seconds using the Back.easeOut equation and dampen the overshoot of the equation by a factor of 0.7.</p>
 
-Delaying a tween
-All tweens can have a start and end delay by default they will do not have any.
+<h3>Delaying a tween</h3>
+<p>All tweens can have a start and end delay by default they will do not have any.</p>
 
-import com.flashdynamix.motion.*;
+<code>import com.flashdynamix.motion.*;
 
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0, null, 1.0);
-timeline.delayEnd = 1.5;
+timeline.delayEnd = 1.5;</code>
 
-This will animate 'myInstance' to the x position of 500 after a starting delay of 1 second with another 1.5 second ending delay before the animation is considered complete.
+<p>This will animate 'myInstance' to the x position of 500 after a starting delay of 1 second with another 1.5 second ending delay before the animation is considered complete.</p>
 
-__________________________________________________________________________________________________________________
+<hr/>
 
 Adding and removing tween events
 TweensyZero and Timelines have 2 events update and complete. Update fires every time the tween is updated and complete fires when the animation is finished. Predefined parameters may be applied to each of these functions as they are fired if none are defined, no parameters are applied.
