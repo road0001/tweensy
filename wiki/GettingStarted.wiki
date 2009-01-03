@@ -15,7 +15,7 @@ TweensyFX (beta)
 Is a beta expansion to TweensyOriginal allowing for motion effects to be applied to animations.
 This includes directional motion blurring, pixelation, xray, bulge/dent displacements, reflection, rgb channel splitting and bump mapping.
 
-__________________________________________________________________________________________________________________
+<hr/>
 
 
 Why use Tweensy?
