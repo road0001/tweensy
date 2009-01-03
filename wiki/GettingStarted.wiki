@@ -56,8 +56,8 @@ Click the plus icon and select the folder containing the source code.</p>
 <h3>A 'to' tween</h3>
 <p>Is an animation which goes from the instances current position to the destination defined in the 'to' Object.</p>
 <code>
-import com.flashdynamix.motion.TweensyZero;<br/>
-<br/>
+import com.flashdynamix.motion.TweensyZero;
+
 TweensyZero.to(myInstance, {x:500});
 </code>
 <p>This will animate 'myInstance' from it's current x to the x position of 500.</p>
@@ -65,8 +65,8 @@ TweensyZero.to(myInstance, {x:500});
 <h3>A 'from' tween</h3>
 <p>Is the opposite of a to based tween. It is an animation which goes from the destination defined in the 'from' Object to the instances current position.</p>
 <code>
-import com.flashdynamix.motion.TweensyZero;<br/>
-<br/>
+import com.flashdynamix.motion.TweensyZero;
+
 TweensyZero.from(myInstance, {x:500});
 </code>
 <p>This will animate 'myInstance' from the x position 500 to it's current x position.</p>
@@ -74,13 +74,13 @@ TweensyZero.from(myInstance, {x:500});
 <h3>A 'fromTo' tween</h3>
 <p>Is using the features of both to and from based tweens. It is an animation which goes from the destination defined in the 'from' Object and to the destination defined in the 'to' Object.</p>
 <code>
-import com.flashdynamix.motion.TweensyZero;<br/>
-<br/>
+import com.flashdynamix.motion.TweensyZero;
+
 TweensyZero.fromTo(myInstance, {x:0}, {x:500});
 </code>
 <p>This will animate 'myInstance' from the x position of 0 to the x position of 500.</p>
 
-</hr>
+<hr/>
 
 <h2>Controlling tweens</h2>
 <p>Tweensy provides methods which allow for the controlling of tweens whilst they are in animation.</p>
@@ -88,25 +88,25 @@ TweensyZero.fromTo(myInstance, {x:0}, {x:500});
 <h3>Stopping a tween</h3>
 <p>Allows for stopping a tween in motion via an Object instance or property names.</p>
 <code>
-import com.flashdynamix.motion.TweensyZero;<br/>
-<br/>
-TweensyZero.to(myInstance1, {x:500, y:500});<br/>
-TweensyZero.to(myInstance2, {x:500, y:500});<br/>
-<br/>
+import com.flashdynamix.motion.TweensyZero;
+
+TweensyZero.to(myInstance1, {x:500, y:500});
+TweensyZero.to(myInstance2, {x:500, y:500});
+
 TweensyZero.stop(myInstance1);</code>
 <p>Stops all tweens for myInstance1 though tweens will continue for myInstance2</p>
 
-TweensyZero.stop(myInstance1, "x");
-Stops tweens for the x property for myInstance1
+<code>TweensyZero.stop(myInstance1, "x");</code>
+<p>Stops tweens for the x property for myInstance1</p>
 
-TweensyZero.stop(null, "x");
-Stops all tweens for the x property animating in TweensyZero
+<code>TweensyZero.stop(null, "x");</code>
+<p>Stops all tweens for the x property animating in TweensyZero</p>
 
-TweensyZero.stop([myInstance1, myInstance2]);
-Stops all tweens for myInstance1 and myInstance2
+<code>TweensyZero.stop([myInstance1, myInstance2]);</code>
+<p>Stops all tweens for myInstance1 and myInstance2</p>
 
-TweensyZero.stop([myInstance1, myInstance2], "x");
-Stops tweens for the x property for myInstance1 and myInstance2
+<code>TweensyZero.stop([myInstance1, myInstance2], "x");</code>
+<p>Stops tweens for the x property for myInstance1 and myInstance2</p>
 
 Pausing and resuming a tween
 Allows for pausing and resuming all tweens executed by TweensyZero.
