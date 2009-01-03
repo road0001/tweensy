@@ -568,7 +568,7 @@ sequence.start();</code>
 <h2>Creating a Render layer</h2>
 <p>Effects in TweensyFX are rendered to a layer. TweensyFX offers it render layers in either vector or bitmap format.</p>
 
-<h3>Bitmap layers<h3>
+<h3>Bitmap layers</h3>
 <p>These layers are resolution dependent and in most cases offer better efficiency over Flash's built-in Display List and applying effects. Bitmap layers have a render area anything outside this area will be ignored. They also have a smoothing, transparency mode and a background color to be used when transparency is off.</p>
 
 <code>var layer:BitmapLayer = new BitmapLayer(500, 450, 1, 0x00FFFFFF, true, true);</code>
