@@ -5,47 +5,46 @@
 TweensyZero and TweensyOriginal<br/>
 and a beta expansion package TweensyFX</p>
 
-TweensyOriginal
-TweensyOriginal is a fully featured Object property tweener it is extremely efficient and is intended for everyday use.
+<h3>TweensyOriginal</h3>
+<p>TweensyOriginal is a fully featured Object property tweener it is extremely efficient and is intended for everyday use.</p>
 
-TweensyZero (2.9KB compiled)
-Tweensy Zero is a light weight version of TweensyOriginal this product is intended for users who are file size conscious.
+<h3>TweensyZero (2.9KB compiled)</h3>
+<p>Tweensy Zero is a light weight version of TweensyOriginal this product is intended for users who are file size conscious.</p>
 
-TweensyFX (beta)
-Is a beta expansion to TweensyOriginal allowing for motion effects to be applied to animations.
-This includes directional motion blurring, pixelation, xray, bulge/dent displacements, reflection, rgb channel splitting and bump mapping.
+<h3>TweensyFX (beta)</h3>
+<p>Is a beta expansion to TweensyOriginal allowing for motion effects to be applied to animations.
+This includes directional motion blurring, pixelation, xray, bulge/dent displacements, reflection, rgb channel splitting and bump mapping.</p>
 
 <hr/>
 
+<h2>Why use Tweensy?</h2>
+<p>TweensyOriginal is the most efficient open source animation package available.</p>
 
-Why use Tweensy?
-TweensyOriginal is the most efficient open source animation package available.
+<hr/>
 
-_________________________________________________________________________________________________________________
-
-How to get Tweensy
-The latest version of Tweensy can be retrieved from it's code.google address.
+<h2>How to get Tweensy</h2>
+<p>The latest version of Tweensy can be retrieved from it's code.google address.
 Project Home : http://code.google.com/p/tweensy/
-SVN : http://tweensy.googlecode.com/svn/trunk/
+SVN : http://tweensy.googlecode.com/svn/trunk/</p>
 
-Once Tweensy is downloaded the releases folder will contain the various Tweensy products these are :
-zero
-original
-fx
+<p>Once Tweensy is downloaded the releases folder will contain the various Tweensy products these are :
+<ul><li>zero</li>
+<li>original/li>
+<li>fx/li></ul>
+</p>
+<p>Tweensy can be used in either as either a pre-compiled SWC or Actionscript source code which is contained in each of these product folders.</p>
 
-Tweensy can be used in either as either a pre-compiled SWC or Actionscript source code which is contained in each of these product folders.
+<h2>Using the Tweensy SWC for CS4:</h2>
+<p>If you have Flash CS4 installed a SWC can be referenced from your FLA. <br/>
+Go to File > Publish settings > Flash > Settings<br/>
+Then choose the tab 'External library path' and click the plus icon and select the Tweensy.swc file.</p>
 
-Using the Tweensy SWC for CS4:
-If you have Flash CS4 installed a SWC can be referenced from your FLA. 
-Go to File > Publish settings > Flash > Settings
-Then choose the tab 'External library path' and click the plus icon and select the Tweensy.swc file.
+<h2>Using the Tweensy Actionscript source code for CS3/CS4:</h2>
+<p>Go to File > Publish settings > Flash > Settings<br/>
+If you're using CS4 select the 'Source Path' tab or ignore this is using CS3<br/>
+Click the plus icon and select the folder containing the source code.</p>
 
-Using the Tweensy Actionscript source code for CS3/CS4:
-Go to File > Publish settings > Flash > Settings
-If you're using CS4 select the 'Source Path' tab or ignore this is using CS3
-Click the plus icon and select the folder containing the source code.
-
-__________________________________________________________________________________________________________________
+</hr>
 
 TweensyZero
 Below are some simple steps to help you get started with creating your first animations with TweensyZero. TweensyZero is a light weight version of Tweensy most core features found in Tweensy are available to TweensyZero. Documentation for TweensyZero can be found under the folder 'documentation/zero'
