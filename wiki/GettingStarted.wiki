@@ -7,7 +7,7 @@ TweensyZero and TweensyOriginal<br/>
 and a beta expansion package TweensyFX</p>
 
 <h3>TweensyOriginal</h3>
-<p>TweensyOriginal is a fully featured Object property tweener it is extremely efficient and is intended for everyday use.</p>
+<p>Tweensy Original is a fully featured Object property tweener it is extremely efficient and is intended for everyday use.</p>
 
 <h3>TweensyZero (2.9KB compiled)</h3>
 <p>Tweensy Zero is a light weight version of TweensyOriginal this product is intended for users who are file size conscious.</p>
