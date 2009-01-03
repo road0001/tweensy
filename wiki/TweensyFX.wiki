@@ -1,3 +1,4 @@
+#labels Phase-Implementation,Featured
 <h2>TweensyFX (beta)</h2>
 <p>TweensyFX provides you with a effect library to apply Bitmap effects onto DisplayObjects in an optimized manner. These effects include directional motion blur, pixelation, xray, bulge/dent displacements, reflection, emitters, rgb channel splitting and bump mapping. TweensyFX is an expansion package to Tweensy as it allows for you to use these effects with the highly optimized tweening engine. Documentation for Tweensy can be found under the folder 'documentation/fx'</p>
 
