@@ -23,7 +23,7 @@ This includes directional motion blurring, pixelation, xray, bulge/dent displace
 <hr/>
 
 <h2>How to get Tweensy</h2>
-<p>The latest version of Tweensy can be retrieved from it's code.google address.
+<p>The latest version of Tweensy can be retrieved from it's code.google address.<br/>
 Project Home : http://code.google.com/p/tweensy/<br/>
 SVN : http://tweensy.googlecode.com/svn/trunk/</p>
 
@@ -55,8 +55,7 @@ Click the plus icon and select the folder containing the source code.</p>
 <p>Animations can be done using one of the following methods :</p>
 <h3>A 'to' tween</h3>
 <p>Is an animation which goes from the instances current position to the destination defined in the 'to' Object.</p>
-<code>
-import com.flashdynamix.motion.TweensyZero;
+<code>import com.flashdynamix.motion.TweensyZero;
 
 TweensyZero.to(myInstance, {x:500});
 </code>
@@ -64,8 +63,7 @@ TweensyZero.to(myInstance, {x:500});
 
 <h3>A 'from' tween</h3>
 <p>Is the opposite of a to based tween. It is an animation which goes from the destination defined in the 'from' Object to the instances current position.</p>
-<code>
-import com.flashdynamix.motion.TweensyZero;
+<code>import com.flashdynamix.motion.TweensyZero;
 
 TweensyZero.from(myInstance, {x:500});
 </code>
@@ -73,8 +71,7 @@ TweensyZero.from(myInstance, {x:500});
 
 <h3>A 'fromTo' tween</h3>
 <p>Is using the features of both to and from based tweens. It is an animation which goes from the destination defined in the 'from' Object and to the destination defined in the 'to' Object.</p>
-<code>
-import com.flashdynamix.motion.TweensyZero;
+<code>import com.flashdynamix.motion.TweensyZero;
 
 TweensyZero.fromTo(myInstance, {x:0}, {x:500});
 </code>
@@ -87,8 +84,7 @@ TweensyZero.fromTo(myInstance, {x:0}, {x:500});
 
 <h3>Stopping a tween</h3>
 <p>Allows for stopping a tween in motion via an Object instance or property names.</p>
-<code>
-import com.flashdynamix.motion.TweensyZero;
+<code>import com.flashdynamix.motion.TweensyZero;
 
 TweensyZero.to(myInstance1, {x:500, y:500});
 TweensyZero.to(myInstance2, {x:500, y:500});
