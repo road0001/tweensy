@@ -1,9 +1,9 @@
 <h1>Getting Started With Tweensy</h1>
 
-Which type of Tweensy is for me ?
-Tweensy offers 2 versions of it's tween engine :
-TweensyZero and TweensyOriginal
-and a beta expansion package TweensyFX
+<h2>Which type of Tweensy is for me ?</h2>
+<p>Tweensy offers 2 versions of it's tween engine :</br>
+TweensyZero and TweensyOriginal</br>
+and a beta expansion package TweensyFX</p>
 
 TweensyOriginal
 TweensyOriginal is a fully featured Object property tweener it is extremely efficient and is intended for everyday use.
@@ -641,4 +641,3 @@ function draw(event:Event):void{
 stage.addEventListener(Event.ENTER_FRAME, draw);
 
 So a mouse following emitter would be created like the above. Updating the emitters x/y will alter the position of the Particles it creates.
-
