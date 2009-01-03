@@ -116,7 +116,7 @@ TweensyZero.secondsPerFrame = 1/30;</code>
 <hr/>
 
 <h2>Other things to know about tweens</h2>
-<p>When a to, from or fromTo tween is defined it returns an instance of TweensyTimelineZero this contains the parameters of this tween which you may modify during the tweens animation for further control over the tween.</h2>
+<p>When a to, from or fromTo tween is defined it returns an instance of TweensyTimelineZero this contains the parameters of this tween which you may modify during the tweens animation for further control over the tween.</p>
 
 <h3>Using timelines</h3>
 <p>When a to, from or fromTo tween is defined it will return an instance of TweensyTImelineZero. Using TweensyTImelineZero allows for defining parameters which are not in the to, from and fromTo method as well as updating properties during the tweens animation. </p>
