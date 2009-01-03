@@ -1,3 +1,4 @@
+#labels Phase-Implementation,Featured
 <h1>Tweensy</h1>
 <p>The Tweensy class contains static methods (for coding convenience) to create and control tween animations. Below are some simple steps to help you get started with creating your first animations with Tweensy. Documentation for Tweensy can be found under the folder 'documentation/original'</p>
 
