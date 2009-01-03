@@ -1,4 +1,4 @@
-<p>Getting Started With Tweensy</p>
+<h1>Getting Started With Tweensy</h1>
 
 Which type of Tweensy is for me ?
 Tweensy offers 2 versions of it's tween engine :
@@ -641,6 +641,4 @@ function draw(event:Event):void{
 stage.addEventListener(Event.ENTER_FRAME, draw);
 
 So a mouse following emitter would be created like the above. Updating the emitters x/y will alter the position of the Particles it creates.
-
-
 
