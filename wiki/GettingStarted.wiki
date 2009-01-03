@@ -170,89 +170,89 @@ timeline.delayEnd = 1.5;</code>
 
 <hr/>
 
-Adding and removing tween events
-TweensyZero and Timelines have 2 events update and complete. Update fires every time the tween is updated and complete fires when the animation is finished. Predefined parameters may be applied to each of these functions as they are fired if none are defined, no parameters are applied.
+<h2>Adding and removing tween events</h2>
+<p>TweensyZero and Timelines have 2 events update and complete. Update fires every time the tween is updated and complete fires when the animation is finished. Predefined parameters may be applied to each of these functions as they are fired if none are defined, no parameters are applied.</p>
 
-Events for TweensyZero
-onUpdate will fire each render of an Event.ENTER_FRAME.
-onComplete will fire after all animations are finished.
+<h3>Events for TweensyZero</h3>
+<p>onUpdate will fire each render of an Event.ENTER_FRAME.<br/>
+onComplete will fire after all animations are finished.</p>
 
-TweensyZero.to(myInstance, {x:500}, 2.0);
-TweensyZero.onComplete = allAnimationsComplete;
+<code>TweensyZero.to(myInstance, {x:500}, 2.0);
+TweensyZero.onComplete = allAnimationsComplete;</code>
 
-Events for TweensyTimelineZero
-onUpdate will fire each time the timeline animation updates.
-onComplete will fire when the timeline animation is finished.
+<h3>Events for TweensyTimelineZero</h3>
+<p>onUpdate will fire each time the timeline animation updates.<br/>
+onComplete will fire when the timeline animation is finished.</p>
 
-import com.flashdynamix.motion.*;
+<code>import com.flashdynamix.motion.*;
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = animationComplete;
-timeline.onCompleteParams = [myInstance];
+timeline.onCompleteParams = [myInstance];</code>
 
-To remove a onComplete or onUpdate event simply set it back to null.
-timeline.onComplete = null;
+<p>To remove a onComplete or onUpdate event simply set it back to null.</p>
+<code>timeline.onComplete = null;</code>
 
-Tweensy uses this method of applying event listeners rather than the Adobe Event Dispatcher this is because it allows for predefined parameters. This easily allows for self removing tweens without all the fussiness of using the EventDispatcher first  i.e.
+<p>Tweensy uses this method of applying event listeners rather than the Adobe Event Dispatcher this is because it allows for predefined parameters. This easily allows for self removing tweens without all the fussiness of using the EventDispatcher first  i.e.</p>
 
-var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
+<code>var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = myInstance.parent.removeChild;
-timeline.onCompleteParams = [myInstance];
+timeline.onCompleteParams = [myInstance];</code>
 
-__________________________________________________________________________________________________________________
+<hr/>
 
-Doing an advanced tween
-Tweening the properties of certain Objects in Actionscript can be more complicated these Objects include BitmapFilters, ColorTransforms, Matrices and SoundTransforms to name a few. This is because tweening the property's of these Objects need to be applied onto another for them to have a visual effect. Though TweensyZero can do this, it requires you to define an extra parameter to define which Object to update onto.
+<h3>Doing an advanced tween</h3>
+<p>Tweening the properties of certain Objects in Actionscript can be more complicated these Objects include BitmapFilters, ColorTransforms, Matrices and SoundTransforms to name a few. This is because tweening the property's of these Objects need to be applied onto another for them to have a visual effect. Though TweensyZero can do this, it requires you to define an extra parameter to define which Object to update onto.</p>
 
-TweensyZero.to(new DropShadowFilter(), {blurX:10, blurY:10}, 2.0, null, 0, myInstance);
-Tweens the blurX and blurY properties for the DropShadowFilter and applies the drop shadow onto myInstance.
+<code>TweensyZero.to(new DropShadowFilter(), {blurX:10, blurY:10}, 2.0, null, 0, myInstance);</code>
+<p>Tweens the blurX and blurY properties for the DropShadowFilter and applies the drop shadow onto myInstance.</p>
 
-TweensyZero.to(myInstance.transform.matrix, {tx:80, ty: 80}, 2.0, null, 0, myInstance);
-Tweens the tx and ty properties for the Matrix of myInstance and applies the matrix transformation onto myInstance.
+<code>TweensyZero.to(myInstance.transform.matrix, {tx:80, ty: 80}, 2.0, null, 0, myInstance);</code>
+<p>Tweens the tx and ty properties for the Matrix of myInstance and applies the matrix transformation onto myInstance.</p>
 
-TweensyZero.to(myInstance.transform.colorTransform, {redOffset:80}, 2.0, null, 0, myInstance);
-Tweens the redOffset property for the ColorTransform of myInstance and applies the color transform onto myInstance.
+<code>TweensyZero.to(myInstance.transform.colorTransform, {redOffset:80}, 2.0, null, 0, myInstance);</code>
+<p>Tweens the redOffset property for the ColorTransform of myInstance and applies the color transform onto myInstance.</p>
 
-TweensyZero.to(myChannel.soundTransform, {volume:0}, 2.0, null, 0, myChannel);
-Tweens the volume property for the SoundTransform of a SoundChannel and applies the sound transform onto myChannel.
+<code>TweensyZero.to(myChannel.soundTransform, {volume:0}, 2.0, null, 0, myChannel);</code>
+<p>Tweens the volume property for the SoundTransform of a SoundChannel and applies the sound transform onto myChannel.</p>
 
-__________________________________________________________________________________________________________________
+</hr>
 
-Tweensy
-The Tweensy class contains static methods (for coding convenience) to create and control tween animations. Below are some simple steps to help you get started with creating your first animations with Tweensy. Documentation for Tweensy can be found under the folder 'documentation/original'
+<h2>Tweensy</h2>
+<p>The Tweensy class contains static methods (for coding convenience) to create and control tween animations. Below are some simple steps to help you get started with creating your first animations with Tweensy. Documentation for Tweensy can be found under the folder 'documentation/original'</p>
 
-__________________________________________________________________________________________________________________
+</hr>
 
-Doing a tween
-Animations can be done using one of the following methods :
+<h3>Doing a tween</h3>
+<p>Animations can be done using one of the following methods :</p>
 
-A 'to' tween
-Is an animation which goes from the instances current position to the destination defined in the 'to' Object.
+<h3>A 'to' tween</h3>
+<p>Is an animation which goes from the instances current position to the destination defined in the 'to' Object.</p>
 
-import com.flashdynamix.motion.Tweensy;
+<code>import com.flashdynamix.motion.Tweensy;
 
-Tweensy.to(myInstance, {x:500});
+Tweensy.to(myInstance, {x:500});</code>
 
-This will animate 'myInstance' from it's current x to the x position of 500.
+<p>This will animate 'myInstance' from it's current x to the x position of 500.</p>
 
-A 'from' tween
-Is essentially the opposite of a to based tween. It is an animation which goes from the destination defined in the 'from' Object to the instances current position.
+<h3>A 'from' tween</h3>
+<p>Is essentially the opposite of a to based tween. It is an animation which goes from the destination defined in the 'from' Object to the instances current position.</p>
 
-import com.flashdynamix.motion.Tweensy;
+<code>import com.flashdynamix.motion.Tweensy;
 
-Tweensy.from(myInstance, {x:500});
+Tweensy.from(myInstance, {x:500});</code>
 
-This will animate 'myInstance' from the x position 500 to it's current x position.
+<p>This will animate 'myInstance' from the x position 500 to it's current x position.</p>
 
-A 'fromTo' tween
-Is using both the features of a from and to tween. It is an animation which goes from the destination defined in the 'from' Object and to the destination defined in the 'to' Object.
+<h3>A 'fromTo' tween</h3>
+<p>Is using both the features of a from and to tween. It is an animation which goes from the destination defined in the 'from' Object and to the destination defined in the 'to' Object.</p>
 
-import com.flashdynamix.motion.Tweensy;
+<code>import com.flashdynamix.motion.Tweensy;
 
-Tweensy.fromTo(myInstance, {x:0}, {x:500});
+Tweensy.fromTo(myInstance, {x:0}, {x:500});</code>
 
-This will animate 'myInstance' from the x position of 0 to the x position of 500.
+<p>This will animate 'myInstance' from the x position of 0 to the x position of 500.</p>
 
-__________________________________________________________________________________________________________________
+<hr/>
 
 Controlling tweens
 Tweensy provides methods which allow for the controlling of tweens whilst they are in animation.
