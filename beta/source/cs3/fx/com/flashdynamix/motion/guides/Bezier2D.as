@@ -14,7 +14,7 @@ package com.flashdynamix.motion.guides {
 		/**
 		 * A list of Points defining nodes of the bezier path.
 		 */
-		public var pts : Array;
+		private var _pts : Array;
 		/**
 		 * Whether the Object will directionally rotate.
 		 */
@@ -30,6 +30,7 @@ package com.flashdynamix.motion.guides {
 
 		private var curve : Array;
 		private var _position : Number = 0;
+		private var _distance : Number = 0;
 		private var radsDegree : Number = 180 / Math.PI;
 
 		/**
@@ -43,7 +44,16 @@ package com.flashdynamix.motion.guides {
 			this.through = through;
 			this.autoRotate = autoRotate;
 			this.movingPts = movingPts;
-			this.pts = pts;
+			_pts = pts;
+		}
+
+		public function set path(curve : Array) : void {
+			_pts = curve;
+			update();
+		}
+
+		public function get path() : Array {
+			return _pts;
 		}
 
 		/**
@@ -51,7 +61,7 @@ package com.flashdynamix.motion.guides {
 		 * @return Returns a Point at the specified index.
 		 */
 		public function index(index : int) : Point {
-			return pts[index];
+			return _pts[index];
 		}
 
 		/**
@@ -59,7 +69,7 @@ package com.flashdynamix.motion.guides {
 		 * @param pt The Point which will be added to the end of the bezier path.
 		 */
 		public function push(pt : Point) : void {
-			pts.push(pt);
+			_pts.push(pt);
 			update();
 		}
 
@@ -69,7 +79,7 @@ package com.flashdynamix.motion.guides {
 		 * @param pt The Point to insert at the index.
 		 */
 		public function addAt(index : int, pt : Point) : void {
-			pts.splice(index, 0, pt);
+			_pts.splice(index, 0, pt);
 			update();
 		}
 
@@ -78,7 +88,7 @@ package com.flashdynamix.motion.guides {
 		 * @param pt The Point you would like to remove from the bezier path.
 		 */
 		public function remove(pt : Point) : void {
-			var index : int = pts.indexOf(pt);
+			var index : int = _pts.indexOf(pt);
 			if(index != -1) removeAt(index, 1);
 		}
 
@@ -89,7 +99,7 @@ package com.flashdynamix.motion.guides {
 		 * 
 		 */
 		public function removeAt(index : int, count : int = 1) : void {
-			pts.splice(index, count);
+			_pts.splice(index, count);
 			update();
 		}
 
@@ -97,7 +107,7 @@ package com.flashdynamix.motion.guides {
 		 * @return The number of nodes in the Bezier path.
 		 */
 		public function get length() : int {
-			return pts.length;
+			return _pts.length;
 		}
 
 		/**
@@ -108,25 +118,33 @@ package com.flashdynamix.motion.guides {
 			_position = num;
 			
 			if(movingPts) update();
+
+			var posDist : Number = num * _distance;
+			var distance : Number = 0;
+			var arcDist : Number;
+			var index : int;
 			
-			var max : int = curve.length - 3;
-			var steps : int = (curve.length - 1) / 2;
-			var idx : Number = num * steps;
-			var inc : Number = idx - int(idx);
-			var start : int = int(idx) * 2;
-			if(start > max) {
+			for(index = 0;index <= curve.length - 3; index += 2) {
+				arcDist = arcLength(curve[index], curve[index + 1], curve[index + 2]);
+				distance += arcDist;
+				if(distance > posDist) break;
+			}
+
+			var inc : Number = (posDist - (distance - arcDist)) / arcDist;
+			
+			if(index > curve.length - 3) {
 				inc = 1;
-				start = max;
+				index = curve.length - 3;
 			}
 			
-			var sPt : Point = curve[start];
-			var cPt : Point = curve[start + 1];
-			var ePt : Point = curve[start + 2];
-		
+			var sPt : Point = curve[index];
+			var cPt : Point = curve[index + 1];
+			var ePt : Point = curve[index + 2];
+
 			var pt : Point = new Point(quadratic(inc, sPt.x, cPt.x, ePt.x), quadratic(inc, sPt.y, cPt.y, ePt.y));
 			item.x = pt.x;
 			item.y = pt.y;
-		
+
 			if(autoRotate) item.rotation = angle(inc, sPt, cPt, ePt) * radsDegree;
 		}
 
@@ -138,10 +156,10 @@ package com.flashdynamix.motion.guides {
 		}
 
 		private function update() : void {
-			if(pts.length <= 2) return;
+			if(_pts.length <= 2) return;
 			
 			if(through) {
-				var pt : Point = pts[int(0)];
+				var pt : Point = _pts[int(0)];
 				var cPt : Point;
 			
 				curve = [];
@@ -157,7 +175,7 @@ package com.flashdynamix.motion.guides {
 				curve.push(cPt);
 				curve.push(pt);
 				
-				var len : int = pts.length - 1;
+				var len : int = _pts.length - 1;
 				for(var i : int = 1;i < len; i++) {
 					cPt = index(i).add(index(i).subtract(cPt));
 					pt = index(i + 1);
@@ -166,8 +184,89 @@ package com.flashdynamix.motion.guides {
 					curve.push(pt);
 				}
 			} else {
-				curve = pts;
+				curve = _pts;
 			}
+			
+			updateDistance();
+		}
+
+		private function updateDistance() : void {
+			for(var i : int = 0;i <= curve.length - 3; i += 2) {
+				_distance += arcLength(curve[i], curve[i + 1], curve[i + 2]);
+			}
+		}
+
+		private function arcLength(pt1 : Point,pt2 : Point,pt3 : Point) : Number {
+			
+			var a1 : Number = angleBetween(pt1, pt2);
+			var a2 : Number = angleBetween(pt2, pt3);
+			if(a1 == a2 || (a2 == a1 + Math.PI)) return distanceBetween(pt1, pt3);
+			
+			var vm : Number = -(1 / 1000000 + pt2.x - .5 * pt3.x - .5 * pt1.x) / (pt2.y - .5 * pt3.y - .5 * pt1.y) ;
+			var vt : Number = (-vm * (pt2.x - pt1.x) + (pt2.y - pt1.y)) / (vm * (pt1.x - 2 * pt2.x + pt3.x) - (pt1.y - 2 * pt2.y + pt3.y));
+			
+			var va : Number = angle(vt, pt1, pt2, pt3);
+
+			var ra : Number = projectDistance(pt1, pt2);
+			var rb : Number = projectDistance(pt2, pt3);
+			var alfa : Number = va - radAngle(pt1, pt2);
+			
+			var beta : Number = radAngle(pt2, pt3) - va;
+			var rax : Number = ra * Math.cos(alfa);
+			var ray : Number = ra * Math.sin(alfa);
+		
+			var rbx : Number = rb * Math.cos(beta);
+			var rby : Number = rb * Math.sin(beta);
+
+			var l1 : Number = .5 * parabolaArcLength(ray, 2 * Math.abs(rax));
+			var l2 : Number = .5 * parabolaArcLength(rby, 2 * Math.abs(rbx));
+			
+			return (rax < 0 || rbx < 0) ? Math.abs(l2 - l1) : l1 + l2;
+		}
+
+		private function angleBetween(p1 : Point, p2 : Point) : Number {
+			var x : Number = p2.x - p1.x;
+			var y : Number = p2.y - p1.y;
+			
+			return Math.atan2(y, x);
+		}
+
+		private function distanceBetween(p1 : Point, p2 : Point) : Number {
+			var x : Number = p2.x - p1.x;
+			var y : Number = p2.y - p1.y;
+			
+			return Math.sqrt((x * x) + (y * y));
+		}
+
+		private function segment(pt1 : Point,pt2 : Point,pt3 : Point,t1 : Number,t2 : Number) : Object {
+			var b1 : Point = new Point();
+			var b2 : Point = new Point();
+			var b3 : Point = new Point();
+			
+			b1.x = quadratic(t1, pt1.x, pt2.x, pt3.x);
+			b1.y = quadratic(t1, pt1.y, pt2.y, pt3.y);
+			b3.x = quadratic(t2, pt1.x, pt2.x, pt3.x);
+			b3.y = quadratic(t2, pt1.y, pt2.y, pt3.y);
+			b2.x = control(t1, t2, pt1.x, pt2.x, pt3.x);
+			b2.y = control(t1, t2, pt1.y, pt2.y, pt3.y);
+
+			return {b1:b1, b2:b2, b3:b3};
+		};
+
+		private  function control(t1 : Number,t2 : Number,a : Number,b : Number,c : Number) : Number {
+			return a + (t1 + t2) * (b - a) + t1 * t2 * (c - 2 * b + a);
+		}
+
+		private function radAngle(p1 : Point,p2 : Point) : Number {
+			return Math.atan2(p2.y - p1.y, p2.x - p1.x);
+		}
+
+		private function projectDistance(p1 : Point,p2 : Point) : Number {
+			return Math.sqrt(p2.x * p2.x + p1.x * p1.x - 2 * p1.x * p2.x + p2.y * p2.y + p1.y * p1.y - 2 * p1.y * p2.y);
+		}
+
+		private function parabolaArcLength(a : Number,b : Number) : Number {
+			return .5 * Math.sqrt(b * b + 16 * a * a) + ((b * b) / (8 * a)) * Math.log((4 * a + Math.sqrt(b * b + 16 * a * a)) / b);
 		}
 
 		private function angle(t : Number, pt1 : Point, pt2 : Point, pt3 : Point) : Number {
