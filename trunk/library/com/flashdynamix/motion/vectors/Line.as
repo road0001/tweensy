@@ -11,7 +11,7 @@
 		/**
 		 * The style parameters to use when the line is drawn via the Graphics.lineStyle method.
 		 */
-		public var style : Array = [1, 0xFFFFFF];
+		public var style : Array = [1, 0x000000];
 		/**
 		 * A list of Points defining the path
 		 */

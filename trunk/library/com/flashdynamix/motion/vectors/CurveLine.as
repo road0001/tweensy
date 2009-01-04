@@ -57,7 +57,6 @@ package com.flashdynamix.motion.vectors {
 				for(var j : int = 1;j < pts.length - 1; j += 2) {
 					cPt = index(j);
 					pt = index(j + 1);
-					
 					vector.curveTo(cPt.x, cPt.y, pt.x, pt.y);
 				}
 			}
