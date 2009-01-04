@@ -295,8 +295,8 @@ tween.to(bezier, {position:1});</code>
 <p>This will animate 'myInstance' along the bezier path defined from it's start position.</p>
 
 <hr/>
-<a href="advancedTweens"></a>
-<h2>Advanced Matrix and ColorMatrixFilter tweens</h2>
+
+<h2><a href="advancedTweens">Advanced Matrix and ColorMatrixFilter tweens</a></h2>
 <p>Tweensy has a package called extras which contains classes which help you to do complicated animations in a very easy manner. These tweens include Matrix transformations around a registration point. As well ColorMatrixFilter effects such as brightness, contrast, colorize and threshold.</p>
 
 <h3>Advanced Matrix tweens</h3>
