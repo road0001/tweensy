@@ -1,4 +1,4 @@
-package com.flashdynamix.motion.plugins {
+﻿package com.flashdynamix.motion.plugins {
 	import flash.display.DisplayObject;		
 
 	/**
@@ -37,11 +37,7 @@ package com.flashdynamix.motion.plugins {
 			return _from;
 		}
 
-		override public function get key() : Object {
-			return _current;
-		}
-
-		override protected function get current() : Object {
+		override public function get current() : Object {
 			return _current;
 		}
 
@@ -60,7 +56,7 @@ package com.flashdynamix.motion.plugins {
 					_current.x = _from.x * q + _to.x * position;
 				} else if(propName == "y") {
 					_current.y = _from.y * q + _to.y * position;
-				} else if(propName == "width") {
+				}else if(propName == "width") {
 					_current.width = _from.width * q + _to.width * position;
 				} else if(propName == "height") {
 					_current.height = _from.height * q + _to.height * position;
@@ -72,17 +68,6 @@ package com.flashdynamix.motion.plugins {
 					_current.alpha = _from.alpha * q + _to.alpha * position;
 				} else if(propName == "rotation" ) {
 					_current.rotation = _from.rotation * q + _to.rotation * position;
-				/**
-				} else if(propName == "z") {
-					_current.z = _from.z * q + _to.z * position;
-				} else if(propName == "scaleZ") {
-					_current.scaleZ = _from.scaleZ * q + _to.scaleZ * position;
-				} else if(propName == "rotationX" ) {
-					_current.rotationX = _from.rotationX * q + _to.rotationX * position;
-				} else if(propName == "rotationY" ) {
-					_current.rotationY = _from.rotationY * q + _to.rotationY * position;
-				} else if(propName == "rotationZ" ) {
-					_current.rotationZ = _from.rotationZ * q + _to.rotationZ * position;*/
 				} else {
 					_current[propName] = _from[propName] * q + _to[propName] * position;
 				}
@@ -115,15 +100,10 @@ package com.flashdynamix.motion.plugins {
 internal dynamic class DisplayTweenObject {
 	public var x : Number;
 	public var y : Number;
-	public var z : Number;
 	public var alpha : Number;
 	public var width : Number;
 	public var height : Number;
 	public var scaleX : Number;
 	public var scaleY : Number;
-	public var scaleZ : Number;
 	public var rotation : Number;
-	public var rotationX : Number;
-	public var rotationY : Number;
-	public var rotationZ : Number;
 }
