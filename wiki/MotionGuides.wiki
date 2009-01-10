@@ -6,7 +6,6 @@
 import com.flashdynamix.motion.guides.Direction2D;
 
 var tween:TweensyGroup = new TweensyGroup();
-
 tween.to(new Direction2D(myInstance, 45, 100), {position:1});</code>
 <p>This will animate 'myInstance' a distance of 100 pixels at 45 degree from it's current position.</p>
 <h3>Orbit guided tweens</h3>
