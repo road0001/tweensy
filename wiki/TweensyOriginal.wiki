@@ -236,7 +236,7 @@ tween.to(new ColorMatrixFilter(), new ColorMatrix(0, 0, 3), 2, null, 0, myInstan
 <hr/>
 <h2>Using TweensySequence</h2>
 <p>TweensySequence allows for a chain of tweens to occur one after another. Like TweensyGroup, TweensySequence must be constructed in order to be used. Once a sequence has been created you can then start, stop, pause or resume the sequence at any time. As well repeat via the modes replay and yoyo.</p>
-<code>import com.flashdynamix.motion.TweensySequence; 
+<code>import com.flashdynamix.motion.TweensySequence;
 
 var sequence:TweensySequence = new TweensySequence();
 sequence.push(myInstance1, {x:200, y:200}, 1);
