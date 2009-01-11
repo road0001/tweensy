@@ -470,19 +470,21 @@ package com.flashdynamix.motion {
 		 * @return An instance to the TweensyTimeline.
 		 */
 		public function add(item : TweensyTimeline) : TweensyTimeline {
-			if(!hasTimelines) startUpdate();
 			
 			if(lazyMode) {
 				var i : int;
 				var instances : Array = item.instances;
 				var len : int = instances.length;
+				var timeline : TweensyTimeline;
+				var timelines : Array
 				
 				for(i = 0;i < len; i++) {
-					var timelines : Array = TweensyTimeline.map[instances[i]];
-					var timeline : TweensyTimeline;
+					timelines = TweensyTimeline.map[instances[i]];
 					for each(timeline in timelines) timeline.removeOverlap(item);
 				}
 			}
+			
+			if(!hasTimelines) startUpdate();
 			
 			item.manager = this;
 			item.useSmartRotate = useSmartRotate;
