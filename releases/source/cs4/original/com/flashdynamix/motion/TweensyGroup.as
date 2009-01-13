@@ -476,7 +476,7 @@ package com.flashdynamix.motion {
 				var instances : Array = item.instances;
 				var len : int = instances.length;
 				var timeline : TweensyTimeline;
-				var timelines : Array
+				var timelines : Array;
 				
 				for(i = 0;i < len; i++) {
 					timelines = TweensyTimeline.map[instances[i]];
@@ -661,6 +661,7 @@ package com.flashdynamix.motion {
 			var next : TweensyTimeline;
 			var dif : Number = secondsPerFrame;
 			var i : int;
+			var len : int = _timelines;
 			
 			if(refreshType == Tweensy.TIME) {
 				dif = getTimer() - time;
@@ -668,7 +669,7 @@ package com.flashdynamix.motion {
 				dif *= 0.001;
 			}
 			
-			for(i = 0;i < _timelines; i++) {
+			for(i = 0;i < len; i++) {
 				next = timeline.next;
 				if(timeline.update(dif)) remove(timeline);
 				
