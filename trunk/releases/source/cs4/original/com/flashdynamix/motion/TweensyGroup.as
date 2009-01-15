@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
 .______                                                              __          ___     
 /\__  _\                                                           /'__`\      /'___`\   
 \/_/\ \/  __  __  __     __      __     ___      ____   __  __    /\ \/\ \    /\_\ /\ \  
@@ -22,11 +21,9 @@ package com.flashdynamix.motion {
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
 	import flash.utils.getTimer;
-
-	import com.flashdynamix.motion.TweensyTimeline;
+	import com.flashdynamix.motion.TweensyTimeline;
 	import com.flashdynamix.utils.ObjectPool;	
-
-	/**
+	/**
 	 * The TweensyGroup Class contains a collection of tweens specified by property tweens for an Object instance.
 	 * Using the TweensyGroup Class to manage tweens is the recommended implementation of Tweensy.
 	 * <BR><BR>
@@ -126,16 +123,13 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyGroup#onCompleteParams
 		 */
 		public var onCompleteParams : Array;
-
-		private var first : TweensyTimeline;
+		private var first : TweensyTimeline;
 		private var last : TweensyTimeline;
-
-		private var time : Number;
+		private var time : Number;
 		private var _timelines : int = 0;
 		private var _paused : Boolean;
 		private var disposed : Boolean = false;
-
-		/**
+		/**
 		 * @param lazyMode Whether the tween manager will automatically remove confilcting tweens. This is not the most efficient method
 		 * for using Tweensy. If lazy mode is turned off (false) then it's the responsibility of the developer to ensure that conflicting tweens don't 
 		 * occur by using the stop method on the instance.
@@ -154,8 +148,7 @@ package com.flashdynamix.motion {
 
 			time = getTimer();
 		}
-
-		/**
+		/**
 		 * Adds a to based tween using the properties defined in the target Object.
 		 * 
 		 * @param instance The instance Object to be tweened or multiple instances if using the type Array e.g. <code>[item1, item2]</code>
@@ -181,8 +174,7 @@ package com.flashdynamix.motion {
 			
 			return add(timeline);
 		}
-
-		/**
+		/**
 		 * Adds a from based tween using the properties defined in the from Object.
 		 * 
 		 * @param instance The instance Object to be tweened or multiple instances if using the type Array e.g. <code>[item1, item2]</code>
@@ -208,8 +200,7 @@ package com.flashdynamix.motion {
 			
 			return add(timeline);
 		}
-
-		/**
+		/**
 		 * Adds a from to based tween using the properties defined in the from and to Objects.
 		 * 
 		 * @param instance The instance Object to be tweened or multiple instances if using the type Array e.g. <code>[item1, item2]</code>
@@ -237,8 +228,7 @@ package com.flashdynamix.motion {
 			
 			return add(timeline);
 		}
-
-		/**
+		/**
 		 * Updates a tween for the instance Object to the new target positions defined in the to Object.
 		 */
 		public function updateTo(instance : Object, to : Object) : void {
@@ -247,8 +237,7 @@ package com.flashdynamix.motion {
 			
 			for(i = 0;i < _timelines; i++) timeline.updateTo(instance, to);
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of tweening an Object instance and then needing to apply this to an update Function call.<BR>
 		 * This is equivalent to : <code>var timeline:TweensyTimeline = tween.to(point, {x:50, y:50});<BR>
 		 * timeline.onUpdate = item.setPoint;<BR>
@@ -274,8 +263,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of an alpha tween for an Object instance.<BR>
 		 * This is equivalent to : <code>tween.to(instance, {alpha:'value'});</code>
 		 * 
@@ -288,8 +276,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of an scaling by x and y for an Object instance.<BR>
 		 * This is equivalent to <code>tween.to(instance, {scaleX:'value', scaleY:'value'});</code>
 		 * 
@@ -302,8 +289,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of an moving by x and y for an Object instance.<BR>
 		 * This is equivalent to : <code>tween.to(instance, {x:'value', y:'value'});</code>
 		 * 
@@ -316,8 +302,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of rotation for an Object instance.<BR>
 		 * This is equivalent to : <code>tween.to(instance, {rotation:'value'});</code>
 		 * 
@@ -332,8 +317,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of a matrix transform for a DisplayObject instance.<BR>
 		 * This is equivalent to :
 		 * <code>tween.to(instance.transform.matrix, new Matrix(), 0.5, null, 0, instance);</code>
@@ -347,8 +331,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of a sound transforms for a Sprite or SoundChannel instance.<BR>
 		 * This is equivalent to :
 		 * <code>tween.to(instance.soundTransform, new SoundTransform(), 0.5, null, 0, instance);</code>
@@ -366,8 +349,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of a tweening BitmapFilter properties and applying them to a DisplayObject instance.<BR>
 		 * This is equivalent to :
 		 * <code>tween.to(new DropShadowFilter(), {alpha:1}, 0.5, null, 0, instance);</code>
@@ -381,8 +363,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of color transitions for a DisplayObject instance.<BR>
 		 * This is equivalent to :
 		 * <code>var ct : ColorTransform = new ColorTransform();<BR>
@@ -402,8 +383,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of color transform for a DisplayObject instance.<BR>
 		 * This is equivalent to :
 		 * <code>tween.to(instance.transform.colorTransform, new ColorTransform(), 0.5, null, 0, instance);</code>
@@ -417,8 +397,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of applying contrast to a DisplayObject instance via a ColorTransform.<BR>
 		 * This is equivalent to :
 		 * <code>var ct : ColorTransform = new ColorTransform(1, 1, 1, 1, 'value' * 255, 'value' * 255, 'value' * 255);<BR>
@@ -439,8 +418,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * This method provides a handy method to do the common task of applying brightness to a DisplayObject instance via a ColorTransform.<BR>
 		 * This is equivalent to :
 		 * <code>var ct : ColorTransform = new ColorTransform('value', 'value', 'value', 1, 'value' * 255, 'value' * 255, 'value' * 255);<BR>
@@ -461,8 +439,7 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		/**
+		/**
 		 * Adds a TweensyTimeline to the TweensyGroup class.
 		 * This can be useful if you want to prepare an animation and the tweens contained within it but not necessarily
 		 * have it to Tweening straight away.
@@ -503,8 +480,7 @@ package com.flashdynamix.motion {
 			
 			return item;
 		}
-
-		/**
+		/**
 		 * Removes a TweensyTimeline from the TweensyGroup class.
 		 * This will stop this timeline from being updated but can be re-added to the TweensyGroup class resuming that animation.
 		 * 
@@ -541,8 +517,7 @@ package com.flashdynamix.motion {
 			
 			if(!hasTimelines) stopUpdate();
 		}
-
-		/**
+		/**
 		 * Allows for removing tweens via an instance or tween props by the following methods :
 		 * <ul>
 		 * <li><code>tween.stop(instance);</code> - stops all property tweens for this instance.</li>
@@ -564,8 +539,7 @@ package com.flashdynamix.motion {
 				timeline = timeline.next;
 			}
 		}
-
-		/**
+		/**
 		 * Removes all tweens from the TweensyGroup Class.
 		 */
 		public function stopAll() : void {
@@ -575,8 +549,7 @@ package com.flashdynamix.motion {
 			last = null;
 			_timelines = 0;
 		}
-
-		/**
+		/**
 		 * Pauses all tweens in the TweensyGroup Class.
 		 */
 		public function pause() : void {
@@ -590,8 +563,7 @@ package com.flashdynamix.motion {
 				timeline = timeline.next;
 			}
 		}
-
-		/**
+		/**
 		 * Resumes all paused tweens in the TweensyGroup Class.
 		 */
 		public function resume() : void {
@@ -605,29 +577,25 @@ package com.flashdynamix.motion {
 				timeline = timeline.next;
 			}
 		}
-
-		/**
+		/**
 		 * Whether the TweensyGroup Class is timeline paused.
 		 */
 		public function get paused() : Boolean {
 			return _paused;
 		}
-
-		/**
+		/**
 		 * Whether the TweensyGroup Class has any TweensyTimeline animations.
 		 */
 		public function get hasTimelines() : Boolean {
 			return (_timelines > 0);
 		}
-
-		/**
+		/**
 		 * Total number of animations in progress for the TweensyGroup class.
 		 */
 		public function get timelines() : int {
 			return _timelines;
 		}
-
-		private function setup(duration : Number, ease : Function, delayStart : Number, onComplete : Function = null, onCompleteParams : Array = null) : TweensyTimeline {
+		private function setup(duration : Number, ease : Function, delayStart : Number, onComplete : Function = null, onCompleteParams : Array = null) : TweensyTimeline {
 			var timeline : TweensyTimeline;
 			
 			if(useObjectPooling) {
@@ -645,23 +613,18 @@ package com.flashdynamix.motion {
 			
 			return timeline;
 		}
-
-		private function startUpdate() : void {
+		private function startUpdate() : void {
 			time = getTimer();
 			
 			frame.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
-
-		private function stopUpdate() : void {
+		private function stopUpdate() : void {
 			frame.removeEventListener(Event.ENTER_FRAME, update);
 		}
-
-		private function update(e : Event) : void {
+		private function update(e : Event) : void {
 			var timeline : TweensyTimeline = first;
 			var next : TweensyTimeline;
 			var dif : Number = secondsPerFrame;
-			var i : int;
-			var len : int = _timelines;
 			
 			if(refreshType == Tweensy.TIME) {
 				dif = getTimer() - time;
@@ -669,7 +632,7 @@ package com.flashdynamix.motion {
 				dif *= 0.001;
 			}
 			
-			for(i = 0;i < len; i++) {
+			while(timeline != null) {
 				next = timeline.next;
 				if(timeline.update(dif)) remove(timeline);
 				
@@ -679,8 +642,7 @@ package com.flashdynamix.motion {
 			if(onUpdate != null) onUpdate.apply(this, onUpdateParams);
 			if(!hasTimelines && onComplete != null) onComplete.apply(this, onCompleteParams);
 		}
-
-		/**
+		/**
 		 * Prepares the TweensyGroup class for garbage collection by disposing its Object Pools and making it 
 		 * no longer usable in the Flash application.
 		 */
@@ -690,8 +652,7 @@ package com.flashdynamix.motion {
 			pool = null;
 			frame = null;
 		}
-
-		/**
+		/**
 		 * Disposes the TweensyGroup Class instance ready for garbage collection
 		 */
 		public function dispose() : void {
@@ -719,8 +680,7 @@ package com.flashdynamix.motion {
 			onUpdateParams = null;
 			_timelines = 0;
 		}
-
-		public function toString() : String {
+		public function toString() : String {
 			return "TweensyGroup " + Tweensy.version + " {timelines:" + _timelines + "}";
 		}
 	}
