@@ -625,8 +625,6 @@ package com.flashdynamix.motion {
 			var timeline : TweensyTimeline = first;
 			var next : TweensyTimeline;
 			var dif : Number = secondsPerFrame;
-			var i : int;
-			var len : int = _timelines;
 			
 			if(refreshType == Tweensy.TIME) {
 				dif = getTimer() - time;
@@ -634,7 +632,7 @@ package com.flashdynamix.motion {
 				dif *= 0.001;
 			}
 			
-			for(i = 0;i < len; i++) {
+			while(timeline != null) {
 				next = timeline.next;
 				if(timeline.update(dif)) remove(timeline);
 				
