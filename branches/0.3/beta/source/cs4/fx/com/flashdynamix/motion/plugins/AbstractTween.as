@@ -1,4 +1,4 @@
-package com.flashdynamix.motion.plugins {
+﻿package com.flashdynamix.motion.plugins {
 	import com.flashdynamix.motion.TweensyTimeline;	
 
 	/**
@@ -9,8 +9,8 @@ package com.flashdynamix.motion.plugins {
 
 		public var inited : Boolean = false;
 		public var timeline : TweensyTimeline;
-		
-		protected var propNames : Object = {};
+		/** @private */
+		internal var propNames : Object = {};
 		protected var _propCount : int = 0;
 
 		public function AbstractTween() {
@@ -18,10 +18,6 @@ package com.flashdynamix.motion.plugins {
 
 		public function construct(...params : Array) : void {
 			inited = false;
-		}
-
-		public function get key() : Object {
-			return null;
 		}
 
 		protected function set to(item : Object) : void {
@@ -38,8 +34,12 @@ package com.flashdynamix.motion.plugins {
 			return null;
 		}
 
-		protected function get current() : Object {
+		public function get current() : Object {
 			return null;
+		}
+		
+		public function get instance():Object{
+			return current;
 		}
 
 		protected function get properties() : Number {
@@ -66,7 +66,7 @@ package com.flashdynamix.motion.plugins {
 
 		public function remove(propName : String) : void {
 			if(propNames[propName] == null) return;
-			
+
 			delete propNames[propName];
 			_propCount--;
 		}
@@ -100,7 +100,7 @@ package com.flashdynamix.motion.plugins {
 		}
 
 		public function removeOverlap(item : AbstractTween) : void {
-			if(item.key == key) {
+			if(item.instance == instance) {
 				for(var propName:String in item.propNames) remove(propName);
 			}
 		}
