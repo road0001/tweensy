@@ -1,13 +1,5 @@
 /**
-.______                                                              __          ___     
-/\__  _\                                                           /'__`\      /'___`\   
-\/_/\ \/  __  __  __     __      __     ___      ____   __  __    /\ \/\ \    /\_\ /\ \  
-...\ \ \ /\ \/\ \/\ \  /'__`\  /'__`\ /' _ `\   /',__\ /\ \/\ \   \ \ \ \ \   \/_/// /__ 
-....\ \ \\ \ \_/ \_/ \/\  __/ /\  __/ /\ \/\ \ /\__, `\\ \ \_\ \   \ \ \_\ \ __  // /_\ \
-.....\ \_\\ \___x___/'\ \____\\ \____\\ \_\ \_\\/\____/ \/`____ \   \ \____//\_\/\______/
-......\/_/ \/__//__/   \/____/ \/____/ \/_/\/_/ \/___/   `/___/> \   \/___/ \/_/\/_____/ 
-............................................................/\___/                       
-............................................................\/__/................. Tweening since 1998 ..................................................................................
+.______                                                         __        __     /\__  _\                                                      /'__`\    /'__`\   \/_/\ \/ __  __  __     __     __    ___     ____  __  __    /\ \/\ \  /\_\L\ \  ...\ \ \/\ \/\ \/\ \  /'__`\ /'__`\/' _ `\  /',__\/\ \/\ \   \ \ \ \ \ \/_/_\_<_ ....\ \ \ \ \_/ \_/ \/\  __//\  __//\ \/\ \/\__, `\ \ \_\ \   \ \ \_\ \__/\ \L\ \.....\ \_\ \___x___/'\ \____\ \____\ \_\ \_\/\____/\/`____ \   \ \____/\_\ \____/......\/_/\/__//__/   \/____/\/____/\/_/\/_/\/___/  `/___/> \   \/___/\/_/\/___/ ......................................................./\___/                    .......................................................\/__/ ................. Tweening since 1998 ..................................................................................
  */
 package com.flashdynamix.motion {
 	import com.flashdynamix.motion.TweensyGroup;
@@ -256,8 +248,8 @@ package com.flashdynamix.motion {
 			repeatCount++;
 			start();
 		}
-		public function set useSmartRotate(flag : Boolean) : void {			tween.useSmartRotate = flag;
-		}				/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get useSmartRotate() : Boolean {			return tween.useSmartRotate;		}		public function set snapToClosest(flag : Boolean) : void {			tween.snapToClosest = flag;		}				/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapToClosest() : Boolean {			return tween.snapToClosest;		}
+		public function set useSmartRotate(flag : Boolean) : void {			tween.smartRotate = flag;
+		}				/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get useSmartRotate() : Boolean {			return tween.smartRotate;		}		public function set snapToClosest(flag : Boolean) : void {			tween.snapToClosest = flag;		}				/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapToClosest() : Boolean {			return tween.snapToClosest;		}
 		/**
 		 * Defines whether the TweensyTimeline repeats.
 		 * 
