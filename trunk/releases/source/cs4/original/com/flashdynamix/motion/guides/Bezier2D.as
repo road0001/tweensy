@@ -45,6 +45,7 @@ package com.flashdynamix.motion.guides {
 			this.autoRotate = autoRotate;
 			this.movingPts = movingPts;
 			_pts = pts;
+			curve = [];
 		}
 
 		public function set path(curve : Array) : void {
@@ -117,25 +118,26 @@ package com.flashdynamix.motion.guides {
 		public function set position(num : Number) : void {
 			_position = num;
 			
+			if(curve.length == 0) return;
+			
 			if(movingPts) update();
 
 			var posDist : Number = num * _distance;
 			var distance : Number = 0;
 			var arcDist : Number;
 			var index : int;
+			var segments : int = curve.length - 3;
 			
-			for(index = 0;index <= curve.length - 3; index += 2) {
+			for(index = 0;index <= segments; index += 2) {
 				arcDist = arcLength(curve[index], curve[index + 1], curve[index + 2]);
+				
+				if(distance + arcDist > posDist) break;
+				
 				distance += arcDist;
-				if(distance > posDist) break;
 			}
-
-			var inc : Number = (posDist - (distance - arcDist)) / arcDist;
 			
-			if(index > curve.length - 3) {
-				inc = 1;
-				index = curve.length - 3;
-			}
+			index = (index > segments) ? segments : index;
+			var inc : Number = (posDist == _distance) ? 1 : (posDist - distance) / arcDist;
 			
 			var sPt : Point = curve[index];
 			var cPt : Point = curve[index + 1];
@@ -158,11 +160,14 @@ package com.flashdynamix.motion.guides {
 		private function update() : void {
 			if(_pts.length <= 2) return;
 			
+			var i : int;
+			var len : int;
+			curve = [];
+			
 			if(through) {
 				var pt : Point = _pts[int(0)];
 				var cPt : Point;
-			
-				curve = [];
+				
 				curve.push(pt);
 				
 				cPt = index(2).subtract(pt);
@@ -175,8 +180,10 @@ package com.flashdynamix.motion.guides {
 				curve.push(cPt);
 				curve.push(pt);
 				
-				var len : int = _pts.length - 1;
-				for(var i : int = 1;i < len; i++) {
+				
+				len = _pts.length - 1;
+				
+				for(i = 1;i < len; i++) {
 					cPt = index(i).add(index(i).subtract(cPt));
 					pt = index(i + 1);
 					
@@ -184,13 +191,18 @@ package com.flashdynamix.motion.guides {
 					curve.push(pt);
 				}
 			} else {
-				curve = _pts;
+				len = 3 + int((_pts.length - 3) / 2) * 2;
+				
+				for( i = 0;i < len;i++) {
+					curve.push(index(i));
+				}
 			}
 			
 			updateDistance();
 		}
 
 		private function updateDistance() : void {
+			_distance = 0;
 			for(var i : int = 0;i <= curve.length - 3; i += 2) {
 				_distance += arcLength(curve[i], curve[i + 1], curve[i + 2]);
 			}
@@ -202,8 +214,16 @@ package com.flashdynamix.motion.guides {
 			var a2 : Number = angleBetween(pt2, pt3);
 			if(a1 == a2 || (a2 == a1 + Math.PI)) return distanceBetween(pt1, pt3);
 			
-			var vm : Number = -(1 / 1000000 + pt2.x - .5 * pt3.x - .5 * pt1.x) / (pt2.y - .5 * pt3.y - .5 * pt1.y) ;
-			var vt : Number = (-vm * (pt2.x - pt1.x) + (pt2.y - pt1.y)) / (vm * (pt1.x - 2 * pt2.x + pt3.x) - (pt1.y - 2 * pt2.y + pt3.y));
+			var vmDivisor : Number = (pt2.y - .5 * pt3.y - .5 * pt1.y);
+			var vm : Number = 0;
+			if(vmDivisor != 0) {
+				vm = -(pt2.x - .5 * pt3.x - .5 * pt1.x) / vmDivisor;
+			}
+			var vtDivisor : Number = (vm * (pt1.x - 2 * pt2.x + pt3.x) - (pt1.y - 2 * pt2.y + pt3.y));
+			var vt : Number = 0;
+			if(vtDivisor != 0) {
+				vt = (-vm * (pt2.x - pt1.x) + (pt2.y - pt1.y)) / vtDivisor;
+			}
 			
 			var va : Number = angle(vt, pt1, pt2, pt3);
 
@@ -266,6 +286,8 @@ package com.flashdynamix.motion.guides {
 		}
 
 		private function parabolaArcLength(a : Number,b : Number) : Number {
+			if(a == 0) return 0;
+			
 			return .5 * Math.sqrt(b * b + 16 * a * a) + ((b * b) / (8 * a)) * Math.log((4 * a + Math.sqrt(b * b + 16 * a * a)) / b);
 		}
 
