@@ -1,13 +1,5 @@
 ﻿/**
-.______                                                              __          ___     
-/\__  _\                                                           /'__`\      /'___`\   
-\/_/\ \/  __  __  __     __      __     ___      ____   __  __    /\ \/\ \    /\_\ /\ \  
-...\ \ \ /\ \/\ \/\ \  /'__`\  /'__`\ /' _ `\   /',__\ /\ \/\ \   \ \ \ \ \   \/_/// /__ 
-....\ \ \\ \ \_/ \_/ \/\  __/ /\  __/ /\ \/\ \ /\__, `\\ \ \_\ \   \ \ \_\ \ __  // /_\ \
-.....\ \_\\ \___x___/'\ \____\\ \____\\ \_\ \_\\/\____/ \/`____ \   \ \____//\_\/\______/
-......\/_/ \/__//__/   \/____/ \/____/ \/_/\/_/ \/___/   `/___/> \   \/___/ \/_/\/_____/ 
-............................................................/\___/                       
-............................................................\/__/
+.______                                                         __        __     /\__  _\                                                      /'__`\    /'__`\   \/_/\ \/ __  __  __     __     __    ___     ____  __  __    /\ \/\ \  /\_\L\ \  ...\ \ \/\ \/\ \/\ \  /'__`\ /'__`\/' _ `\  /',__\/\ \/\ \   \ \ \ \ \ \/_/_\_<_ ....\ \ \ \ \_/ \_/ \/\  __//\  __//\ \/\ \/\__, `\ \ \_\ \   \ \ \_\ \__/\ \L\ \.....\ \_\ \___x___/'\ \____\ \____\ \_\ \_\/\____/\/`____ \   \ \____/\_\ \____/......\/_/\/__//__/   \/____/\/____/\/_/\/_/\/___/  `/___/> \   \/___/\/_/\/___/ ......................................................./\___/                    .......................................................\/__/ 
 ................. Tweening since 1998 ......................
 ............................................................
  */
@@ -70,12 +62,11 @@ package com.flashdynamix.motion {
 		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>
 		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.
 		 */
-		public var useSmartRotate : Boolean = true;
+		public var smartRotate : Boolean = true;
 		/**
 		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.
 		 */
-		public var snapToClosest : Boolean = false;
-		/**
+		public var snapToClosest : Boolean = false;		public var autoHide : Boolean = false;		/**
 		 * Defines how many seconds per frame are added to to each on an ENTER_FRAME when TweensyGroup Class's refreshType is of the Tweensy.FRAME mode.<BR>
 		 * This property and feature is intended as an alternative to the Tweensy.TIME (time based animation) mode which can result in jumpy effects.
 		 * This is because by using Tweensy.Time rfreshType it ensures that your animation will accurately finish in the time you specify.
@@ -464,8 +455,8 @@ package com.flashdynamix.motion {
 			if(!hasTimelines) startUpdate();
 			
 			item.manager = this;
-			item.useSmartRotate = useSmartRotate;
-			item.snapToClosest = snapToClosest;
+			item.smartRotate = smartRotate;
+			item.snapToClosest = snapToClosest;			item.autoHide = autoHide;
 			
 			if(last) {
 				last.next = item;
