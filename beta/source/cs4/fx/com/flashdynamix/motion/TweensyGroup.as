@@ -1,29 +1,10 @@
 ﻿/**
-.______                                                              __          ___     
-/\__  _\                                                           /'__`\      /'___`\   
-\/_/\ \/  __  __  __     __      __     ___      ____   __  __    /\ \/\ \    /\_\ /\ \  
-...\ \ \ /\ \/\ \/\ \  /'__`\  /'__`\ /' _ `\   /',__\ /\ \/\ \   \ \ \ \ \   \/_/// /__ 
-....\ \ \\ \ \_/ \_/ \/\  __/ /\  __/ /\ \/\ \ /\__, `\\ \ \_\ \   \ \ \_\ \ __  // /_\ \
-.....\ \_\\ \___x___/'\ \____\\ \____\\ \_\ \_\\/\____/ \/`____ \   \ \____//\_\/\______/
-......\/_/ \/__//__/   \/____/ \/____/ \/_/\/_/ \/___/   `/___/> \   \/___/ \/_/\/_____/ 
-............................................................/\___/                       
-............................................................\/__/
+.______                                                              __          ___     /\__  _\                                                           /'__`\      /'___`\   \/_/\ \/  __  __  __     __      __     ___      ____   __  __    /\ \/\ \    /\_\ /\ \  ...\ \ \ /\ \/\ \/\ \  /'__`\  /'__`\ /' _ `\   /',__\ /\ \/\ \   \ \ \ \ \   \/_/// /__ ....\ \ \\ \ \_/ \_/ \/\  __/ /\  __/ /\ \/\ \ /\__, `\\ \ \_\ \   \ \ \_\ \ __  // /_\ \.....\ \_\\ \___x___/'\ \____\\ \____\\ \_\ \_\\/\____/ \/`____ \   \ \____//\_\/\______/......\/_/ \/__//__/   \/____/ \/____/ \/_/\/_/ \/___/   `/___/> \   \/___/ \/_/\/_____/ ............................................................/\___/                       ............................................................\/__/
 ................. Tweening since 1998 ......................
 ............................................................
  */
 package com.flashdynamix.motion {
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.filters.BitmapFilter;
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
-	import flash.media.SoundChannel;
-	import flash.media.SoundTransform;
-	import flash.utils.getTimer;
-	import com.flashdynamix.motion.TweensyTimeline;
-	import com.flashdynamix.utils.ObjectPool;	
-	/**
+	import flash.display.DisplayObject;	import flash.display.Sprite;	import flash.events.Event;	import flash.filters.BitmapFilter;	import flash.geom.ColorTransform;	import flash.geom.Matrix;	import flash.media.SoundChannel;	import flash.media.SoundTransform;	import flash.utils.Dictionary;	import flash.utils.getTimer;		import com.flashdynamix.motion.TweensyTimeline;	import com.flashdynamix.utils.ObjectPool;		/**
 	 * The TweensyGroup Class contains a collection of tweens specified by property tweens for an Object instance.
 	 * Using the TweensyGroup Class to manage tweens is the recommended implementation of Tweensy.
 	 * <BR><BR>
@@ -52,7 +33,7 @@ package com.flashdynamix.motion {
 	 */
 	public class TweensyGroup {
 		private static var pool : ObjectPool = new ObjectPool(TweensyTimeline);
-		private static var frame : Sprite = new Sprite();
+		private static var frame : Sprite = new Sprite();		private static var map : Dictionary = new Dictionary(true);
 		/**
 		 * Defines whether the TweensyGroup Class will automatically resolve property tween conflicts.<BR>
 		 * Property tween conflicts occur when one property tweens time overlaps another.
@@ -70,12 +51,11 @@ package com.flashdynamix.motion {
 		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>
 		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.
 		 */
-		public var useSmartRotate : Boolean = true;
+		public var smartRotate : Boolean = true;
 		/**
 		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.
 		 */
-		public var snapToClosest : Boolean = false;
-		/**
+		public var snapToClosest : Boolean = false;		public var autoHide : Boolean = false;		/**
 		 * Defines how many seconds per frame are added to to each on an ENTER_FRAME when TweensyGroup Class's refreshType is of the Tweensy.FRAME mode.<BR>
 		 * This property and feature is intended as an alternative to the Tweensy.TIME (time based animation) mode which can result in jumpy effects.
 		 * This is because by using Tweensy.Time rfreshType it ensures that your animation will accurately finish in the time you specify.
@@ -308,7 +288,7 @@ package com.flashdynamix.motion {
 		 * 
 		 * @return An instance to the TweensyTimeline.
 		 * 
-		 * @see com.flashdynamix.motion.TweensyGroup#useSmartRotate
+		 * @see com.flashdynamix.motion.TweensyGroup#smartRotate
 		 */
 		public function rotateTo(instance : Object, rotation : Number, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
@@ -326,7 +306,7 @@ package com.flashdynamix.motion {
 		 */
 		public function matrixTo(instance : Object, mtx : Matrix, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			timeline.to(DisplayObject(instance).transform.matrix, mtx, instance);
+			timeline.to((instance as DisplayObject).transform.matrix, mtx, instance);
 			add(timeline);
 			
 			return timeline;
@@ -340,11 +320,11 @@ package com.flashdynamix.motion {
 		 */
 		public function soundTransformTo(instance : Object, trans : SoundTransform, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			if(instance is SoundChannel) {
-				timeline.to(SoundChannel(instance).soundTransform, trans, instance);
+						if(instance is SoundChannel) {
+				timeline.to((instance as SoundChannel).soundTransform, trans, instance);
 			} else {
-				timeline.to(Sprite(instance).soundTransform, trans, instance);
-			}
+				timeline.to((instance as Sprite).soundTransform, trans, instance);
+			}			
 			add(timeline);
 			
 			return timeline;
@@ -376,9 +356,9 @@ package com.flashdynamix.motion {
 		 */
 		public function colorTo(instance : Object, color : uint, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			var ct : ColorTransform = new ColorTransform();
-			ct.color = color;
-			timeline.to(DisplayObject(instance).transform.colorTransform, ct, instance);
+						var ct : ColorTransform = new ColorTransform();
+			ct.color = color;			
+			timeline.to((instance as DisplayObject).transform.colorTransform, ct, instance);
 			add(timeline);
 			
 			return timeline;
@@ -392,7 +372,7 @@ package com.flashdynamix.motion {
 		 */
 		public function colorTransformTo(instance : Object, color : ColorTransform, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			timeline.to(DisplayObject(instance).transform.colorTransform, color, instance);
+			timeline.to((instance as DisplayObject).transform.colorTransform, color, instance);
 			add(timeline);
 			
 			return timeline;
@@ -412,8 +392,8 @@ package com.flashdynamix.motion {
 		 */
 		public function contrastTo(instance : Object, amount : Number, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			var ct : ColorTransform = new ColorTransform(1, 1, 1, 1, amount * 255, amount * 255, amount * 255);
-			timeline.to(DisplayObject(instance).transform.colorTransform, ct, instance);
+						var ct : ColorTransform = new ColorTransform(1, 1, 1, 1, amount * 255, amount * 255, amount * 255);
+						timeline.to((instance as DisplayObject).transform.colorTransform, ct, instance);
 			add(timeline);
 			
 			return timeline;
@@ -433,8 +413,8 @@ package com.flashdynamix.motion {
 		 */
 		public function brightnessTo(instance : Object, amount : Number, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {
 			var timeline : TweensyTimeline = setup(duration, ease, delayStart);
-			var ct : ColorTransform = new ColorTransform(amount, amount, amount, 1, amount * 255, amount * 255, amount * 255);
-			timeline.to(DisplayObject(instance).transform.colorTransform, ct, instance);
+						var ct : ColorTransform;			if(amount > 0) {				ct = new ColorTransform(amount, amount, amount, 1, amount * 255, amount * 255, amount * 255);
+			} else {				ct = new ColorTransform(1 + amount, 1 + amount, 1 + amount);			}						timeline.to((instance as DisplayObject).transform.colorTransform, ct, instance);
 			add(timeline);
 			
 			return timeline;
@@ -449,33 +429,29 @@ package com.flashdynamix.motion {
 		public function add(item : TweensyTimeline) : TweensyTimeline {
 			
 			if(lazyMode) {
-				var i : int;
-				var instances : Array = item.instances;
-				var len : int = instances.length;
+								var instances : Array = item.instances;				var instance : Object;
 				var timeline : TweensyTimeline;
 				var timelines : Array;
 				
-				for(i = 0;i < len; i++) {
-					timelines = TweensyTimeline.map[instances[i]];
-					for each(timeline in timelines) timeline.removeOverlap(item);
+				for each(instance in instances) {
+					timelines = map[instance];										if(timelines) {
+						for each(timeline in timelines) timeline.removeOverlap(item);					} else {						timelines = map[instance] = [];					}										timelines.push(item);
 				}
 			}
 			
 			if(!hasTimelines) startUpdate();
 			
 			item.manager = this;
-			item.useSmartRotate = useSmartRotate;
-			item.snapToClosest = snapToClosest;
+			item.smartRotate = smartRotate;
+			item.snapToClosest = snapToClosest;			item.autoHide = autoHide;
 			
 			if(last) {
-				last.next = item;
+				last.next = item;				item.previous = last;
 			} else {
 				first = item;
 			}
 			
-			item.previous = last;
 			last = item;
-			
 			_timelines++;
 			
 			return item;
@@ -489,31 +465,19 @@ package com.flashdynamix.motion {
 		public function remove(item : TweensyTimeline) : void {
 			if(item.manager != this) return;
 			
-			// If there is a previous item then set previous items
-			// next item to be this items next item
 			if(item.previous) item.previous.next = item.next;
-			
-			// If there is a next item set its previous item
-			// to be this items previous item
 			if(item.next) item.next.previous = item.previous;
 			
-			// If this is the first item then set the first item to be the next item
 			if(item == first) {
 				first = first.next;
 				if(first) first.previous = null;
 			}
 			
-			// If this is the last item then set the last item to be the previous item
 			if(item == last) {
 				last = item.previous;
 				if(last) last.next = null;
-			}
-					
-			_timelines--;
-			if(useObjectPooling) {
-				pool.checkIn(item);
-				item.clear();
-			}
+			}			
+			if(useObjectPooling) {				pool.checkIn(item);				item.clear();			}						if(lazyMode) {				var instances : Array = item.instances;				var timelines : Array;				var instance : Object;								for each(instance in instances) {					timelines = map[instance];					timelines.splice(timelines.indexOf(item), 1);										if(timelines.length == 0) map[instance] = null;				}			}						_timelines--;
 			
 			if(!hasTimelines) stopUpdate();
 		}
@@ -598,10 +562,9 @@ package com.flashdynamix.motion {
 		private function setup(duration : Number, ease : Function, delayStart : Number, onComplete : Function = null, onCompleteParams : Array = null) : TweensyTimeline {
 			var timeline : TweensyTimeline;
 			
-			if(useObjectPooling) {
-				timeline = new TweensyTimeline();
+			if(useObjectPooling) {				timeline = pool.checkOut();
 			} else {
-				timeline = pool.checkOut();
+				timeline = new TweensyTimeline();
 			}
 			
 			timeline.manager = this;
@@ -632,7 +595,7 @@ package com.flashdynamix.motion {
 				dif *= 0.001;
 			}
 			
-			while(timeline != null) {
+			while(timeline) {
 				next = timeline.next;
 				if(timeline.update(dif)) remove(timeline);
 				
@@ -650,7 +613,7 @@ package com.flashdynamix.motion {
 			pool.dispose();
 			
 			pool = null;
-			frame = null;
+			frame = null;			map = null;
 		}
 		/**
 		 * Disposes the TweensyGroup Class instance ready for garbage collection
@@ -662,9 +625,8 @@ package com.flashdynamix.motion {
 			
 			var timeline : TweensyTimeline = first;
 			var next : TweensyTimeline;
-			var i : int;
 			
-			for(i = 0;i < _timelines; i++) {
+			while(timeline) {
 				next = timeline.next;
 				timeline.dispose();
 				timeline = next;

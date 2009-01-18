@@ -80,7 +80,7 @@
 			var current : Number = _current[propName];
 			var target : Number = super.translate(propName, value);
 			
-			if(propName == "rotation" && timeline.useSmartRotate) {
+			if(propName == "rotation" && timeline.smartRotate) {
 				target = smartRotate(current, target);
 			}
 			
