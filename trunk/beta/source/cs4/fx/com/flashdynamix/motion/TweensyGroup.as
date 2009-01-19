@@ -55,7 +55,7 @@ package com.flashdynamix.motion {
 		/**
 		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.
 		 */
-		public var snapToClosest : Boolean = false;		public var autoHide : Boolean = false;		/**
+		public var snapToClosest : Boolean = false;		/**
 		 * Defines how many seconds per frame are added to to each on an ENTER_FRAME when TweensyGroup Class's refreshType is of the Tweensy.FRAME mode.<BR>
 		 * This property and feature is intended as an alternative to the Tweensy.TIME (time based animation) mode which can result in jumpy effects.
 		 * This is because by using Tweensy.Time rfreshType it ensures that your animation will accurately finish in the time you specify.
@@ -443,7 +443,7 @@ package com.flashdynamix.motion {
 			
 			item.manager = this;
 			item.smartRotate = smartRotate;
-			item.snapToClosest = snapToClosest;			item.autoHide = autoHide;
+			item.snapToClosest = snapToClosest;
 			
 			if(last) {
 				last.next = item;				item.previous = last;
