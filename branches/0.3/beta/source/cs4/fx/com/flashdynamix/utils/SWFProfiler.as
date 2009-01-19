@@ -5,8 +5,7 @@ package com.flashdynamix.utils {
 	import flash.system.System;
 	import flash.ui.*;
 	import flash.utils.getTimer;	
-
-	/**
+	/**
 	 * The SWFProfiler is a degugging tool which allows for monitoring the amount of memory and the frame rate of a SWF.
 	 */
 	public class SWFProfiler {
@@ -102,6 +101,16 @@ package com.flashdynamix.utils {
 		 */
 		public static function get averageFps() : Number {
 			return totalCount / runningTime;
+		}				public static function show() : void {
+			ci.caption = "Hide Profiler";
+			displayed = true;
+			stage.addChild(content);
+			updateDisplay();
+		}
+		public static function hide() : void {
+			ci.caption = "Show Profiler";
+			displayed = false;
+			stage.removeChild(content);
 		}
 		private static function get runningTime() : Number {
 			return (currentTime - initTime) / 1000;
@@ -115,17 +124,6 @@ package com.flashdynamix.utils {
 			} else {
 				hide();
 			}
-		}
-		private static function show() : void {
-			ci.caption = "Hide Profiler";
-			displayed = true;
-			stage.addChild(content);
-			updateDisplay();
-		}
-		private static function hide() : void {
-			ci.caption = "Show Profiler";
-			displayed = false;
-			stage.removeChild(content);
 		}
 		private static function draw(e : Event = null) : void {
 			currentTime = getTimer();
@@ -171,12 +169,10 @@ package com.flashdynamix.utils {
 		}
 	}
 }
-
-import flash.display.*;
+import flash.display.*;
 import flash.events.Event;
 import flash.text.*;
-
-internal class ProfilerContent extends Sprite {
+internal class ProfilerContent extends Sprite {
 	private var minFpsTxtBx : TextField;
 	private var maxFpsTxtBx : TextField;
 	private var minMemTxtBx : TextField;
