@@ -35,6 +35,10 @@ package com.flashdynamix.utils {
 			list[length++] = item;
 		}
 
+		public function empty() : void {
+			size = length = list.length = 0;
+		}
+
 		public function dispose() : void {
 			if(disposed) return;
 			
