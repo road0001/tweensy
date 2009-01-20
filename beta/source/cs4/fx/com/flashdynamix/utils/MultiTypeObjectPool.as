@@ -24,12 +24,20 @@ package com.flashdynamix.utils {
 			ObjectPool(pools[item.constructor]).checkIn(item);
 		}
 
+		public function empty() : void {
+			var pool : ObjectPool;
+			
+			for each(pool in pools) pool.empty();
+		}
+
 		public function dispose() : void {
 			if(disposed) return;
 			
 			disposed = true;
 			
-			for each(var pool:ObjectPool in pools) {
+			var pool : ObjectPool;
+			
+			for each(pool in pools) {
 				pool.dispose();
 				delete pools[pool];
 			}

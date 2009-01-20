@@ -5,16 +5,19 @@ package com.flashdynamix.utils {
 	import flash.system.System;
 	import flash.ui.*;
 	import flash.utils.getTimer;	
-	/**
+
+	/**
 	 * The SWFProfiler is a degugging tool which allows for monitoring the amount of memory and the frame rate of a SWF.
 	 */
 	public class SWFProfiler {
-		private static var itvTime : int;
+
+		private static var itvTime : int;
 		private static var initTime : int;
 		private static var currentTime : int;
 		private static var frameCount : int;
 		private static var totalCount : int;
-		public static var minFps : Number;
+
+		public static var minFps : Number;
 		public static var maxFps : Number;
 		public static var minMem : Number;
 		public static var maxMem : Number;
@@ -22,14 +25,17 @@ package com.flashdynamix.utils {
 		public static var refreshRate : Number = 1;
 		public static var fpsList : Array = [];
 		public static var memList : Array = [];
-		private static var displayed : Boolean = false;
+
+		private static var displayed : Boolean = false;
 		private static var started : Boolean = false;
 		private static var inited : Boolean = false;
 		private static var frame : Sprite;
 		private static var stage : Stage;
 		private static var content : ProfilerContent;
 		private static var ci : ContextMenuItem;
-				/**
+
+		
+		/**
 		 * Iniates the SWFProfiler to the ContextMenu of the reference passed.
 		 */
 		public static function init(context : InteractiveObject) : void {
@@ -55,7 +61,8 @@ package com.flashdynamix.utils {
 			
 			start();
 		}
-		/**
+
+		/**
 		 * Starts updating the Profiler.
 		 */
 		public static function start() : void {
@@ -65,7 +72,8 @@ package com.flashdynamix.utils {
 			totalCount = frameCount = 0;
 			addEvent(frame, Event.ENTER_FRAME, draw);
 		}
-		/**
+
+		/**
 		 * Stops updating the Profiler.
 		 */
 		public static function stop() : void {
@@ -73,7 +81,8 @@ package com.flashdynamix.utils {
 			started = false;
 			removeEvent(frame, Event.ENTER_FRAME, draw);
 		}
-		/**
+
+		/**
 		 * Garbage collect the SWF.
 		 */
 		public static function gc() : void {
@@ -84,48 +93,58 @@ package com.flashdynamix.utils {
 			} catch (e : Error) {
 			}
 		}
-		/**
+
+		/**
 		 * @return The current frames per second.
 		 */
 		public static function get currentFps() : Number {
 			return frameCount / intervalTime;
 		}
-		/**
+
+		/**
 		 * @return The current amount of memory used by the SWF in MB.
 		 */
 		public static function get currentMem() : Number {
 			return (System.totalMemory / 1024) / 1000;
 		}
-		/**
+
+		/**
 		 * @return The average frames per second.
 		 */
 		public static function get averageFps() : Number {
 			return totalCount / runningTime;
-		}				public static function show() : void {
+		}
+		
+		public static function show() : void {
 			ci.caption = "Hide Profiler";
 			displayed = true;
 			stage.addChild(content);
 			updateDisplay();
 		}
-		public static function hide() : void {
+
+		public static function hide() : void {
 			ci.caption = "Show Profiler";
 			displayed = false;
 			stage.removeChild(content);
 		}
-		private static function get runningTime() : Number {
+
+		private static function get runningTime() : Number {
 			return (currentTime - initTime) / 1000;
 		}
-		private static function get intervalTime() : Number {
+
+		private static function get intervalTime() : Number {
 			return (currentTime - itvTime) / 1000;
 		}
-		private static function onSelect(e : ContextMenuEvent) : void {
+
+		private static function onSelect(e : ContextMenuEvent) : void {
 			if(!displayed) {
 				show();
 			} else {
 				hide();
 			}
 		}
-		private static function draw(e : Event = null) : void {
+
+		private static function draw(e : Event = null) : void {
 			currentTime = getTimer();
 			
 			frameCount++;
@@ -148,11 +167,13 @@ package com.flashdynamix.utils {
 				frameCount = 0;
 			}
 		}
-		private static function updateDisplay() : void {
+
+		private static function updateDisplay() : void {
 			updateMinMax();
 			content.update(runningTime, minFps, maxFps, minMem, maxMem, currentFps, currentMem, averageFps, fpsList, memList, history);
 		}
-		private static function updateMinMax() : void {
+
+		private static function updateMinMax() : void {
 			if(!(currentFps > 0)) return;
 			
 			minFps = Math.min(currentFps, minFps);
@@ -161,19 +182,24 @@ package com.flashdynamix.utils {
 			minMem = Math.min(currentMem, minMem);
 			maxMem = Math.max(currentMem, maxMem);
 		}
-		private static function addEvent(item : EventDispatcher, type : String, listener : Function) : void {
+
+		private static function addEvent(item : EventDispatcher, type : String, listener : Function) : void {
 			item.addEventListener(type, listener, false, 0, true);
 		}
-		private static function removeEvent(item : EventDispatcher, type : String, listener : Function) : void {
+
+		private static function removeEvent(item : EventDispatcher, type : String, listener : Function) : void {
 			item.removeEventListener(type, listener);
 		}
 	}
 }
-import flash.display.*;
+
+import flash.display.*;
 import flash.events.Event;
 import flash.text.*;
-internal class ProfilerContent extends Sprite {
-	private var minFpsTxtBx : TextField;
+
+internal class ProfilerContent extends Sprite {
+
+	private var minFpsTxtBx : TextField;
 	private var maxFpsTxtBx : TextField;
 	private var minMemTxtBx : TextField;
 	private var maxMemTxtBx : TextField;
@@ -181,7 +207,9 @@ import flash.text.*;
 	private var box : Shape;
 	private var fps : Shape;
 	private var mb : Shape;
-		public function ProfilerContent() : void {
+
+	
+	public function ProfilerContent() : void {
 		fps = new Shape();
 		mb = new Shape();
 		box = new Shape();
@@ -237,7 +265,8 @@ import flash.text.*;
 		this.addEventListener(Event.ADDED_TO_STAGE, added, false, 0, true);
 		this.addEventListener(Event.REMOVED_FROM_STAGE, removed, false, 0, true);
 	}
-	public function update(runningTime : Number, minFps : Number, maxFps : Number, minMem : Number, maxMem : Number, currentFps : Number, currentMem : Number, averageFps : Number, fpsList : Array, memList : Array, history : int) : void {
+
+	public function update(runningTime : Number, minFps : Number, maxFps : Number, minMem : Number, maxMem : Number, currentFps : Number, currentMem : Number, averageFps : Number, fpsList : Array, memList : Array, history : int) : void {
 		if(runningTime >= 1) {
 			minFpsTxtBx.text = minFps.toFixed(3) + " Fps";
 			maxFpsTxtBx.text = maxFps.toFixed(3) + " Fps";
@@ -285,14 +314,17 @@ import flash.text.*;
 			}
 		}
 	}
-	private function added(e : Event) : void {
+
+	private function added(e : Event) : void {
 		resize();
 		stage.addEventListener(Event.RESIZE, resize, false, 0, true);
 	}
-	private function removed(e : Event) : void {
+
+	private function removed(e : Event) : void {
 		stage.removeEventListener(Event.RESIZE, resize);
 	}
-	private function resize(e : Event = null) : void {
+
+	private function resize(e : Event = null) : void {
 		var vec : Graphics = box.graphics;
 		vec.clear();
 		
