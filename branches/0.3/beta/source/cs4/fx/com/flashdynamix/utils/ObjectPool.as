@@ -10,7 +10,7 @@ package com.flashdynamix.utils {
 		private var list : Array = [];
 		private var disposed : Boolean = false;
 
-		public function ObjectPool(Create : Class, minSize : int = 50) {
+		public function ObjectPool(Create : Class, minSize : int = 10) {
 			this.Create = Create;
 			this.minSize = minSize;
 			
@@ -33,6 +33,10 @@ package com.flashdynamix.utils {
 
 		public function checkIn(item : *) : void {
 			list[length++] = item;
+		}
+
+		public function empty() : void {
+			size = length = list.length = 0;
 		}
 
 		public function dispose() : void {
