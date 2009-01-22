@@ -69,7 +69,7 @@ package com.flashdynamix.motion {
 		public function TweensySequence() {
 			queue = [];
 			
-			tween = new TweensyGroup(true, false);
+			tween = new TweensyGroup(false, false);
 			tween.onComplete = done;
 		}
 		/**
@@ -249,7 +249,7 @@ package com.flashdynamix.motion {
 			start();
 		}
 		public function set smartRotate(flag : Boolean) : void {			tween.smartRotate = flag;
-		}				/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get smartRotate() : Boolean {			return tween.smartRotate;		}		public function set snapToClosest(flag : Boolean) : void {			tween.snapToClosest = flag;		}				/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapToClosest() : Boolean {			return tween.snapToClosest;		}
+		}		/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get smartRotate() : Boolean {			return tween.smartRotate;		}		public function set snapToClosest(flag : Boolean) : void {			tween.snapToClosest = flag;		}		/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapToClosest() : Boolean {			return tween.snapToClosest;		}
 		/**
 		 * Defines whether the TweensyTimeline repeats.
 		 * 
@@ -277,7 +277,7 @@ package com.flashdynamix.motion {
 		}
 		public function get refreshType() : String {
 			return tween.refreshType;
-		}		private function item(index : int) : TweensyTimeline {			return queue[index];		}
+		}		public function get duration() : Number {			if(last) return 0;			return last.duration;		}		private function item(index : int) : TweensyTimeline {			return queue[index];		}
 		private function done() : void {
 			if(canRepeat) {
 				switch(repeatType) {
