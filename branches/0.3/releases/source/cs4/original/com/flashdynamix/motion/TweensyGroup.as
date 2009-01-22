@@ -44,7 +44,7 @@
 
 		/**		 * Updates a tween for the instance Object to the new target positions defined in the to Object.		 */		public function updateTo(instance : Object, toObj : Object) : void {			var timeline : TweensyTimeline = first;			var timelinesList : Array = map[instance];						for each(timeline in timelinesList) timeline.updateTo(instance, toObj);		}
 
-		/**		 * This method provides a handy method to do the common task of tweening an Object instance and then needing to apply this to an update Function call.<BR>		 * This is equivalent to : <code>var timeline:TweensyTimeline = tween.to(point, {x:50, y:50});<BR>		 * timeline.onUpdate = item.setPoint;<BR>		 * timeline.onUpdateParams = [point];</code>		 * <BR><BR>		 * If requiring not to just set the instance to the Function but rather properties within the instance which are tweening this can be 		 * done via the following code example :<BR>		 * <code>var onUpdate:Function = function(current:Object):void{<BR>		 * 		pane.setSize(current.width, current.height);<BR>		 * }<BR>		 * tween.functionTo({width:pane.width, height:pane.height}, {width:200, height:200}, onUpdate);</code>		 * 		 * @return An instance to the TweensyTimeline.		 */		public function functionTo(instance : Object, toObj : Object, onUpdate : Function, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {			var timeline : TweensyTimeline = setup(duration, ease, delayStart);			timeline.to(instance, toObj);						timeline.onUpdate = onUpdate;			timeline.onUpdateParams = [instance];						add(timeline);						return timeline;		}
+		/**		 * This method provides a handy method to do the common task of tweening an Object instance and then needing to apply this to an update Function call.<BR>		 * This is equivalent to : <code>var timeline:TweensyTimeline = tween.to(point, {x:50, y:50});<BR>		 * timeline.onUpdate = item.setPoint;<BR>		 * timeline.onUpdateParams = [point];</code>		 * <BR><BR>		 * If requiring not to just set the instance to the Function but rather properties within the instance which are tweening this can be 		 * done via the following code example :<BR>		 * <code>var onUpdate:Function = function(current:Object):void{<BR>		 * 		pane.setSize(current.width, current.height);<BR>		 * }<BR>		 * tween.functionTo({width:pane.width, height:pane.height}, {width:200, height:200}, onUpdate);</code>		 * 		 * @return An instance to the TweensyTimeline.		 */		public function functionTo(instance : Object, toObj : Object, onUpdate : Function, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {			var timeline : TweensyTimeline = setup(duration, ease, delayStart);			timeline.to(instance, toObj);						timeline.onUpdate = onUpdate;						add(timeline);						return timeline;		}
 
 		/**		 * This method provides a handy method to do the common task of an alpha tween for an Object instance.<BR>		 * This is equivalent to : <code>tween.to(instance, {alpha:'value'});</code>		 * 		 * @return An instance to the TweensyTimeline.		 */		public function alphaTo(instance : DisplayObject, alpha : Number, duration : Number = 0.5, ease : Function = null, delayStart : Number = 0) : TweensyTimeline {			var timeline : TweensyTimeline = setup(duration, ease, delayStart);			timeline.to(instance, {alpha:alpha});			add(timeline);						return timeline;		}
 
@@ -101,9 +101,11 @@
 
 		/**		 * Removes all tweens from the TweensyGroup Class.		 */		public function stopAll() : void {			if(_timelines > 0)						var timeline : TweensyTimeline = first;						while(timeline) {				timeline.stopAll();				timeline = timeline.next;			}		}
 
-		/**		 * Pauses all tweens in the TweensyGroup Class.		 */		public function pause() : void {			_paused = true;						var timeline : TweensyTimeline = first;						while(timeline) {				timeline.pause();				timeline = timeline.next;			}		}
+		/**		 * Pauses all tweens in the TweensyGroup Class.		 */		public function pause() : void {			_paused = true;		}
 
-		/**		 * Resumes all paused tweens in the TweensyGroup Class.		 */		public function resume() : void {			_paused = false;						var timeline : TweensyTimeline = first;						while(timeline) {				timeline.resume();				timeline = timeline.next;			}		}
+		/**		 * Resumes all paused tweens in the TweensyGroup Class.		 */		public function resume() : void {			_paused = false;
+			
+			time = getTimer();		}
 
 		/**		 * Whether the TweensyGroup Class is timeline paused.		 */		public function get paused() : Boolean {			return _paused;		}
 
@@ -119,7 +121,9 @@
 		private function stopUpdate() : void {
 			frame.removeEventListener(Event.ENTER_FRAME, update);		}
 
-		private function update(e : Event) : void {			var timeline : TweensyTimeline = first;			var next : TweensyTimeline;			var dif : Number = secondsPerFrame;						if(refreshType == Tweensy.TIME) {				dif = getTimer() - time;				time += dif;				dif *= 0.001;			}						while(timeline) {				next = timeline.next;				timeline.update(dif);				timeline = next;			}						if(onUpdate != null) onUpdate.apply(this, onUpdateParams);			if(!hasTimelines && onComplete != null) onComplete.apply(this, onCompleteParams);		}
+		private function update(e : Event) : void {
+			if(_paused) return;
+						var timeline : TweensyTimeline = first;			var next : TweensyTimeline;			var dif : Number = secondsPerFrame;						if(refreshType == Tweensy.TIME) {				dif = getTimer() - time;				time += dif;				dif *= 0.001;			}						while(timeline) {				next = timeline.next;				timeline.update(dif);				timeline = next;			}						if(onUpdate != null) onUpdate.apply(this, onUpdateParams);			if(!hasTimelines && onComplete != null) onComplete.apply(this, onCompleteParams);		}
 
 		/**		 * Prepares the TweensyGroup class for garbage collection by disposing its Object Pools and making it 		 * no longer usable in the Flash application.		 */		public static function empty() : void {			pool.empty();			map = new Dictionary(true);			keyframes = new Dictionary(true);			filters = new Dictionary(true);		}
 
