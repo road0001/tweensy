@@ -125,12 +125,7 @@ package com.flashdynamix.motion {
 		 */
 		public var snapToClosest : Boolean = false;
 		public var autoHide : Boolean = false;
-		/**
-		 * Executed on each update to the TweensyTimeline animation.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onUpdateParams
-		 */
-		public var onUpdate : Function;
+
 		/**
 		 * Parameters applied to the onUpdate Function.
 		 * 
@@ -138,23 +133,11 @@ package com.flashdynamix.motion {
 		 */
 		public var onUpdateParams : Array;
 		/**
-		 * Executed when the TweensyTimeline animation is complete.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onCompleteParams
-		 */
-		public var onComplete : Function;
-		/**
 		 * Parameters applied to the onComplete Function.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#onComplete
 		 */
 		public var onCompleteParams : Array;
-		/**
-		 * Executed when the TweensyTimeline animation repeats.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onRepeatParams
-		 */
-		public var onRepeat : Function;
 		/**
 		 * Parameters applied to the onRepeat Function.
 		 * 
@@ -168,9 +151,9 @@ package com.flashdynamix.motion {
 		internal var next : TweensyTimeline;
 		/** @private */
 		internal var previous : TweensyTimeline;
-		/** @private */
-		internal var _onComplete : Function;
 
+		private var _onComplete : Function;		private var _onRepeat : Function;		private var _onUpdate : Function;
+		private var hasEvents : Boolean = false;
 		private var _instances : Array = []; 
 		private var _tweens : int = 0;
 		private var _time : Number = 0;
@@ -291,38 +274,36 @@ package com.flashdynamix.motion {
 		 * 
 		 * @return Whether the TweensyTimeline animation has finished playing.
 		 */
-		public function update(secs : Number) : Boolean {
-			if(paused) return false;
+		public function update(secs : Number) : void {
+			if(paused) return;
 			
 			_time += secs;
-			
-			var played : Number = _time - delayStart;
-			var done : Boolean = false;
+			var played : Number = _time - delayStart, done : Boolean = false, position : Number, tween : AbstractTween;
 			
 			if(played > 0) {
 				
 				done = finished;
+				args[0] = (played > _duration) ? _duration : played;
+				position = ease.apply(null, args);
 				
-				played = (played > _duration) ? _duration : played;
-				args[0] = played;
+				for each(tween in list) tween.update(position);
 				
-				var position : Number = ease.apply(null, args);
-				var tween : AbstractTween;
-				var i : int;
+				if(hasEvents) {
+					if(onUpdate != null) {
+						onUpdate.apply(null, onUpdateParams);
+						done = finished;
+					}
 				
-				for (i = 0;i < _tweens; i++) {
-					tween = list[i];
-					tween.update(position);
-				}
-
-				if(onUpdate != null) {
-					onUpdate.apply(null, onUpdateParams);
-					done = finished;
+					if(done) {
+						if(onComplete != null) {
+							onComplete.apply(null, onCompleteParams);
+							done = finished;
+						}
+					}
 				}
 				
 				if(done) {
 					if(canRepeat) {
-						
 						if(repeatType == YOYO) {
 							yoyo();
 						} else if(repeatType == REPLAY) {
@@ -331,19 +312,15 @@ package com.flashdynamix.motion {
 							loop();
 						}
 						
-						if(onRepeat != null) onRepeat.apply(null, onRepeatParams);
-						done = finished;
-					}
-					
-					if(done) {
-						if(onComplete != null) onComplete.apply(null, onCompleteParams);
-						done = finished && !canRepeat;
-						if(done && _onComplete != null) _onComplete();
+						if(hasEvents && onRepeat != null) {
+							onRepeat.apply(null, onRepeatParams);
+							done = finished && !canRepeat;
+						}
+					} else {
+						manager.remove(this);
 					}
 				}
 			}
-			
-			return done;
 		}
 
 		/**
@@ -518,6 +495,48 @@ package com.flashdynamix.motion {
 
 		public function get instances() : Array {
 			return _instances;
+		}
+
+		/**
+		 * Executed on each update to the TweensyTimeline animation.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onUpdateParams
+		 */
+		public function set onUpdate(func : Function) : void {
+			hasEvents = (func == null) ? false : true;
+			_onUpdate = func;
+		}
+
+		public function get onUpdate() : Function {
+			return _onUpdate;
+		}
+
+		/**
+		 * Executed when the TweensyTimeline animation is complete.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onCompleteParams
+		 */
+		public function set onComplete(func : Function) : void {
+			hasEvents = (func == null) ? false : true;
+			_onComplete = func;
+		}
+
+		public function get onComplete() : Function {
+			return _onComplete;
+		}
+
+		/**
+		 * Executed when the TweensyTimeline animation repeats.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onRepeatParams
+		 */
+		public function set onRepeat(func : Function) : void {
+			hasEvents = (func == null) ? false : true;
+			_onRepeat = func;
+		}
+
+		public function get onRepeat() : Function {
+			return _onRepeat;
 		}
 
 		/** @private */
