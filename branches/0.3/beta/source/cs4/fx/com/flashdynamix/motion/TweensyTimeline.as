@@ -432,7 +432,7 @@ package com.flashdynamix.motion {
 		}
 
 		public function set time(seconds : Number) : void {
-			_time = seconds;
+			update(seconds-_time);
 		}
 
 		/**
