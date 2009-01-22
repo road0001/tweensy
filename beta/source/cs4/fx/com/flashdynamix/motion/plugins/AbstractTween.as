@@ -92,8 +92,8 @@
 				var i : int;
 				var propName : String;
 				
-				for(i = _propCount - 1;i >= 0; i--) {
-					propName = propNames[i];
+				for(i = item.properties - 1;i >= 0; i--) {
+					propName = item.propNames[i];
 					remove(propName);
 				}
 			}
@@ -152,7 +152,6 @@
 
 		public function remove(propName : String) : void {
 			var index : int = propNames.indexOf(propName);
-			
 			if(index >= 0) {
 				propNames.splice(index, 1);
 				_propCount--;
