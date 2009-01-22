@@ -1,64 +1,80 @@
 ﻿package com.flashdynamix.motion.plugins {
 	import com.flashdynamix.motion.TweensyTimeline;	
-	/**
+
+	/**
 	 * This abstract tween class provides necessary functionality to the typed plugin
 	 * tweens.
 	 */
 	public class AbstractTween {
-		public var inited : Boolean = false;
+
+		public var inited : Boolean = false;
 		public var timeline : TweensyTimeline;
 		/** @private */
-		internal var propNames : Object = {};
+		internal var propNames : Array = [];
 		protected var _propCount : int = 0;
-		public function AbstractTween() {
+
+		public function AbstractTween() {
 		}
-		public function construct(currentObj : Object, updateObj : Object) : void {
+
+		public function construct(currentObj : Object, updateObj : Object) : void {
 			inited = false;
 		}
-		protected function set to(item : Object) : void {
+
+		protected function set to(item : Object) : void {
 		}
-		protected function get to() : Object {
+
+		protected function get to() : Object {
 			return null;
 		}
-		protected function set from(item : Object) : void {
+
+		protected function set from(item : Object) : void {
 		}
-		protected function get from() : Object {
+
+		protected function get from() : Object {
 			return null;
 		}
-		public function get current() : Object {
+
+		public function get current() : Object {
 			return null;
 		}
-		public function get instance() : Object {
+
+		public function get instance() : Object {
 			return current;
 		}
-		protected function get properties() : Number {
+
+		protected function get properties() : Number {
 			return _propCount;
 		}
-		public function get hasAnimations() : Boolean {
+
+		public function get hasAnimations() : Boolean {
 			return (_propCount > 0);
 		}
-		public function toTarget(toObj : Object) : void {
+
+		public function toTarget(toObj : Object) : void {
 			for(var propName:String in toObj) {
 				addTo(propName, toObj[propName]);
 			}
 			
 			apply();
 		}
-		public function fromTarget(fromObj : Object) : void {
+
+		public function fromTarget(fromObj : Object) : void {
 			for(var propName:String in fromObj) {
 				addFrom(propName, fromObj[propName]);
 			}
 			
 			apply();
 		}
-		public function fromToTarget(fromObj : Object, toObj : Object) : void {
+
+		public function fromToTarget(fromObj : Object, toObj : Object) : void {
 			for(var propName:String in fromObj) {
 				addFromTo(propName, fromObj[propName], toObj[propName]);
 			}
 			
 			apply();
 		}
-		public function updateTo(position : Number, item : Object) : void {
+
+		public function updateTo(position : Number, item : Object) : void {
 			for(var propName:String in item) {
 				if(has(propName)) {
 					var target : Number = item[propName];
@@ -69,12 +85,21 @@
 				}
 			}
 		}
-		public function removeOverlap(item : AbstractTween) : void {
+
+		public function removeOverlap(item : AbstractTween) : void {
 			if(match(item)) {
-				for(var propName:String in item.propNames) remove(propName);
+				
+				var i : int;
+				var propName : String;
+				
+				for(i = _propCount - 1;i >= 0; i--) {
+					propName = propNames[i];
+					remove(propName);
+				}
 			}
 		}
-		public function stop(...props : Array) : void {
+
+		public function stop(...props : Array) : void {
 			
 			if(props.length == 0) {
 				stopAll();
@@ -85,64 +110,72 @@
 				for(i = 0;i < len; i++) remove(props[i]);
 			}
 		}
-		public function stopAll() : void {
-			for(var propName:String in propNames) delete propNames[propName];
+
+		public function stopAll() : void {
+			propNames.length = 0;
 			
 			_propCount = 0;
 		}
-		public function update(position : Number) : void {
+
+		public function update(position : Number) : void {
 		}
-		public function swapToFrom() : void {
+
+		public function swapToFrom() : void {
 			var toCopy : Object = to;
 			
 			to = from;
 			from = toCopy;
 		}
-		public function addTo(propName : String, target : *) : void {
+
+		public function addTo(propName : String, target : *) : void {
 			to[propName] = translate(propName, target);
 			
-			if(!propNames[propName]) {
-				propNames[propName] = true;
-				_propCount++;
-			}
+			propNames[_propCount] = propName;
+			_propCount++;
 		}
-		public function addFrom(propName : String, target : *) : void {
+
+		public function addFrom(propName : String, target : *) : void {
 			to[propName] = current[propName];
 			current[propName] = translate(propName, target);
 			
-			if(!propNames[propName]) {
-				propNames[propName] = true;
-				_propCount++;
-			}
+			propNames[_propCount] = propName;
+			_propCount++;
 		}
-		public function addFromTo(propName : String, fromTarget : *, toTarget : *) : void {
+
+		public function addFromTo(propName : String, fromTarget : *, toTarget : *) : void {
 			to[propName] = translate(propName, toTarget);
 			current[propName] = translate(propName, fromTarget);
 			
-			if(!propNames[propName]) {
-				propNames[propName] = true;
-				_propCount++;
+			propNames[_propCount] = propName;
+			_propCount++;
+		}
+
+		public function remove(propName : String) : void {
+			var index : int = propNames.indexOf(propName);
+			
+			if(index >= 0) {
+				propNames.splice(index, 1);
+				_propCount--;
 			}
 		}
-		public function remove(propName : String) : void {
-			if(propNames[propName] == null) return;
 
-			delete propNames[propName];
-			_propCount--;
-		}
-		public function clear() : void {
+		public function clear() : void {
 			stopAll();
 			timeline = null;
 		}
-		protected function has(propName : String) : Boolean {
-			return (propNames[propName] != null);
+
+		protected function has(propName : String) : Boolean {
+			return propNames.indexOf(propName) > 0;
 		}
-		protected function match(item : AbstractTween) : Boolean {
+
+		protected function match(item : AbstractTween) : Boolean {
 			return item.instance == instance;
 		}
-		protected function apply() : void {
+
+		protected function apply() : void {
 		}
-		protected function translate(propName : String, value : *) : Number {
+
+		protected function translate(propName : String, value : *) : Number {
 			
 			var current : Number = current[propName];
 			var target : Number;
@@ -161,7 +194,8 @@
 			
 			return target;
 		}
-		protected function smartRotate(currentAngle : Number, targetAngle : Number) : Number {
+
+		protected function smartRotate(currentAngle : Number, targetAngle : Number) : Number {
 			var pi : Number = 180;
 			var pi2 : Number = pi * 2;
 				
@@ -172,7 +206,8 @@
 			
 			return targetAngle;
 		}
-		public function dispose() : void {
+
+		public function dispose() : void {
 			propNames = null;
 			timeline = null;
 		}

@@ -8,8 +8,6 @@ package com.flashdynamix.utils {
 
 		public function MultiTypeObjectPool(...types : Array) {
 			pools = new Dictionary(true);
-			var len : int = types.length;
-			for(var i : int = 0;i < len; i++) add(types[i]);
 		}
 
 		public function add(Type : Class) : void {
@@ -17,11 +15,11 @@ package com.flashdynamix.utils {
 		}
 
 		public function checkOut(Type : Class) : * {
-			return ObjectPool(pools[Type]).checkOut();
+			return (pools[Type] as ObjectPool).checkOut();
 		}
 
 		public function checkIn(item : Object) : void {
-			ObjectPool(pools[item.constructor]).checkIn(item);
+			(pools[item.constructor] as ObjectPool).checkIn(item);
 		}
 
 		public function empty() : void {
