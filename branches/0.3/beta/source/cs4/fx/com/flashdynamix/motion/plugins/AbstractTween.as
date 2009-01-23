@@ -10,10 +10,11 @@
 		public var inited : Boolean = false;
 		public var timeline : TweensyTimeline;
 		/** @private */
-		internal var propNames : Array = [];
+		internal var propNames : Vector.<String>;
 		protected var _propCount : int = 0;
 
 		public function AbstractTween() {
+			propNames = new Vector.<String>();
 		}
 
 		public function construct(currentObj : Object, updateObj : Object) : void {
@@ -128,7 +129,7 @@
 		}
 
 		public function addTo(propName : String, target : *) : void {
-			to[propName] = translate(propName, target);
+			to[propName] = translate(current[propName], target);
 			
 			propNames[_propCount] = propName;
 			_propCount++;
@@ -136,15 +137,15 @@
 
 		public function addFrom(propName : String, target : *) : void {
 			to[propName] = current[propName];
-			current[propName] = translate(propName, target);
+			current[propName] = translate(current[propName], target);
 			
 			propNames[_propCount] = propName;
 			_propCount++;
 		}
 
 		public function addFromTo(propName : String, fromTarget : *, toTarget : *) : void {
-			to[propName] = translate(propName, toTarget);
-			current[propName] = translate(propName, fromTarget);
+			current[propName] = translate(current[propName], fromTarget);
+			to[propName] = translate(current[propName], toTarget);
 			
 			propNames[_propCount] = propName;
 			_propCount++;
@@ -164,7 +165,7 @@
 		}
 
 		protected function has(propName : String) : Boolean {
-			return propNames.indexOf(propName) > 0;
+			return propNames.indexOf(propName) >= 0;
 		}
 
 		protected function match(item : AbstractTween) : Boolean {
@@ -174,9 +175,8 @@
 		protected function apply() : void {
 		}
 
-		protected function translate(propName : String, value : *) : Number {
+		protected function translate(current : Number, value : *) : Number {
 			
-			var current : Number = current[propName];
 			var target : Number;
 			
 			if(value is String) {
