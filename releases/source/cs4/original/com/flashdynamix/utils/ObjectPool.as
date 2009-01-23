@@ -10,7 +10,7 @@ package com.flashdynamix.utils {
 		private var list : Array = [];
 		private var disposed : Boolean = false;
 
-		public function ObjectPool(Create : Class, minSize : int = 1000) {
+		public function ObjectPool(Create : Class, minSize : int = 10) {
 			this.Create = Create;
 			this.minSize = minSize;
 			
