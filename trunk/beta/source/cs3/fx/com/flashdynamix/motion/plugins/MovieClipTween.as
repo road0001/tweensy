@@ -42,6 +42,10 @@
 		override public function get current() : Object {
 			return _current;
 		}
+		
+		override public function match(item : AbstractTween) : Boolean {
+			return (item is MovieClipTween && super.match(item));
+		}
 
 		override public function update(position : Number) : void {
 			var q : Number = 1 - position;
