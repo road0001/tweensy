@@ -154,17 +154,17 @@ package com.flashdynamix.motion {
 
 		private var _onComplete : Function;		private var _onRepeat : Function;		private var _onUpdate : Function;
 		private var hasEvents : Boolean = false;
-		private var _instances : Array = []; 
+		private var _instances : Vector.<Object>; 
 		private var _tweens : int = 0;
 		private var _time : Number = 0;
-		private var _paused : Boolean = false;
 		private var args : Array = defaultArgs.concat();
 		private var _duration : Number;
-		private var list : Array;
+		private var list : Vector.<AbstractTween>;
 		private var disposed : Boolean = false;
 
 		public function TweensyTimeline() {
-			list = [];
+			list = new Vector.<AbstractTween>();
+			_instances = new Vector.<Object>();
 		}
 
 		/**
@@ -275,10 +275,9 @@ package com.flashdynamix.motion {
 		 * @return Whether the TweensyTimeline animation has finished playing.
 		 */
 		public function update(secs : Number) : void {
-			if(paused) return;
-			
 			_time += secs;
-			var played : Number = _time - delayStart, done : Boolean = false, position : Number, tween : AbstractTween;
+			
+			var played : Number = _time - delayStart, done : Boolean, position : Number, tween : AbstractTween;
 			
 			if(played > 0) {
 				
@@ -321,24 +320,6 @@ package com.flashdynamix.motion {
 					}
 				}
 			}
-		}
-
-		/**
-		 * Pauses a playing TweensyTimeline
-		 */
-		public function pause() : void {
-			if(paused) return;
-			
-			_paused = true; 
-		}
-
-		/**
-		 * Resumes a paused TweensyTimeline
-		 */
-		public function resume() : void {
-			if(!paused) return;
-			
-			_paused = false;
 		}
 
 		/**
@@ -432,7 +413,7 @@ package com.flashdynamix.motion {
 		}
 
 		public function set time(seconds : Number) : void {
-			update(seconds-_time);
+			update(seconds - _time);
 		}
 
 		/**
@@ -464,13 +445,6 @@ package com.flashdynamix.motion {
 		}
 
 		/**
-		 * Whether the TweensyTimeline is paused.
-		 */
-		public function get paused() : Boolean {
-			return (_paused);
-		}
-
-		/**
 		 * This is when the animation is after the delay start and before its delay end.
 		 * 
 		 * @return Whether the TweensyTimeline is playing. 
@@ -493,7 +467,7 @@ package com.flashdynamix.motion {
 			return (_tweens > 0);
 		}
 
-		public function get instances() : Array {
+		public function get instances() : Vector.<Object> {
 			return _instances;
 		}
 
@@ -592,7 +566,6 @@ package com.flashdynamix.motion {
 			repeatEase = null;
 			disposed = false;
 			_time = 0;
-			_paused = false;
 			repeatCount = 0;
 		}
 
@@ -615,7 +588,7 @@ package com.flashdynamix.motion {
 			tween.clear();
 			TweensyPluginList.checkIn(tween);
 			
-			_instances.splice(_instances.indexOf(tween.instance));
+			_instances.splice(_instances.indexOf(tween.instance), 1);
 			
 			list.splice(list.indexOf(tween), 1);
 			
