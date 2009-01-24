@@ -7,7 +7,7 @@
 	 */
 	public class AbstractTween {
 
-		public var inited : Boolean = false;
+		protected var inited : Boolean = false;
 		public var timeline : TweensyTimeline;
 		/** @private */
 		internal var propNames : Vector.<String>;
