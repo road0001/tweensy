@@ -2,7 +2,6 @@ package com.flashdynamix.utils {
 
 	public class ObjectPool {
 
-		public var minSize : int;
 		public var size : int = 0;
 		public var Create : Class;
 		public var length : int = 0;
@@ -10,11 +9,8 @@ package com.flashdynamix.utils {
 		private var list : Array = [];
 		private var disposed : Boolean = false;
 
-		public function ObjectPool(Create : Class, minSize : int = 10) {
+		public function ObjectPool(Create : Class) {
 			this.Create = Create;
-			this.minSize = minSize;
-			
-			for(var i : int = 0;i < minSize; i++) add();
 		}
 
 		public function add() : void {

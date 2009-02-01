@@ -1,7 +1,7 @@
-﻿package com.flashdynamix.motion.plugins {	import flash.display.DisplayObject;		/**	 * This plugin will be used when tweening DisplayObjects.	 */	public class SimpleDisplayTween extends AbstractTween {		public static var key : Class = DisplayObject;
+﻿package com.flashdynamix.motion.plugins {	import flash.display.DisplayObject;		/**	 * This plugin will be used when tweening DisplayObjects.	 */	public class SimpleDisplayTween extends AbstractTween {		public static var key : Class = DisplayObject;		
 		private var _current : DisplayObject;		protected var _to : DisplayTweenObject;		protected var _from : DisplayTweenObject;
 		public function SimpleDisplayTween() {			_to = new DisplayTweenObject();			_from = new DisplayTweenObject();		}
-		override public function construct(currentObj : Object, updateObj : Object) : void {			inited = false;						_current = currentObj as DisplayObject;		}
+		override public function construct(instance : Object, applyToInstance : Object) : void {			inited = false;						_current = instance as DisplayObject;		}
 		override protected function set to(item : Object) : void {			_to = item as DisplayTweenObject;		}
 		override protected function get to() : Object {			return _to;		}
 		override protected function set from(item : Object) : void {			_from = item as DisplayTweenObject;		}
