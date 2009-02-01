@@ -1,10 +1,13 @@
-/**
+
+/**
 .______                                                         __        __     /\__  _\                                                      /'__`\    /'__`\   \/_/\ \/ __  __  __     __     __    ___     ____  __  __    /\ \/\ \  /\_\L\ \  ...\ \ \/\ \/\ \/\ \  /'__`\ /'__`\/' _ `\  /',__\/\ \/\ \   \ \ \ \ \ \/_/_\_<_ ....\ \ \ \ \_/ \_/ \/\  __//\  __//\ \/\ \/\__, `\ \ \_\ \   \ \ \_\ \__/\ \L\ \.....\ \_\ \___x___/'\ \____\ \____\ \_\ \_\/\____/\/`____ \   \ \____/\_\ \____/......\/_/\/__//__/   \/____/\/____/\/_/\/_/\/___/  `/___/> \   \/___/\/_/\/___/ ......................................................./\___/                    .......................................................\/__/ ................. Tweening since 1998 ..................................................................................
  */
 package com.flashdynamix.motion {
 	import com.flashdynamix.motion.TweensyGroup;
-	import com.flashdynamix.motion.TweensyTimeline;	
-	/**
+	import com.flashdynamix.motion.TweensyTimeline;
+	import com.flashdynamix.motion.data.TweenStyle;	
+
+	/**
 	 * TweensySequence Class allows for complex animations which occur one after another.
 	 * This can of course be done with the TweensyGroup or Tweensy class but the TweensySequence class helps
 	 * you by calculating the delayStarts for each tween as it's pushed into the sequence queue.
@@ -14,7 +17,8 @@ package com.flashdynamix.motion {
 	 * @see com.flashdynamix.motion.TweensyTimeline
 	 */
 	public class TweensySequence {
-		/**
+
+		/**
 		 * Executed when the TweensySequence animation is complete.
 		 * 
 		 * @see com.flashdynamix.motion.TweensySequence.onCompleteParams
@@ -56,9 +60,11 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensySequence.repeatType
 		 */
 		public var repeatCount : int = 0;
-		private var tween : TweensyGroup;
+
+		private var tween : TweensyGroup;
 		private var queue : Array;		private var disposed : Boolean = false;
-		/**
+
+		/**
 		 * @param lazyMode whether the tween manager will automatically remove confilcting tweens. This is not the most efficient method
 		 * for using Tweensy. If lazy mode is turned off then it's the responsibility of the developer to ensure that conflicting tweens don't 
 		 * occur by using the stop method on the instance. As well in lazy mode Tweensy will not use Object pooling decreasing it's overall performance.
@@ -72,7 +78,8 @@ package com.flashdynamix.motion {
 			tween = new TweensyGroup(false, false);
 			tween.onComplete = done;
 		}
-		/**
+
+		/**
 		 * Adds an animation after the last animation in the sequence.
 		 * 
 		 * @param instance The instance Object to be tweened or multiple instances if using the type Array e.g. [item1, item2]
@@ -104,7 +111,8 @@ package com.flashdynamix.motion {
 			
 			queue[queue.length] = timeline;
 		}
-		/**
+
+		/**
 		 * Adds an animation before the first animation in the sequence.
 		 *
 		 * @param instance The instance Object to be tweened or multiple instances if using the type Array e.g. [item1, item2]
@@ -139,7 +147,8 @@ package com.flashdynamix.motion {
 			
 			queue.unshift(timeline);
 		}
-		/**
+
+		/**
 		 * Adds an animation to the specified index position in the animation sequence.
 		 *
 		 * @param index The index to insert this animation into the sequence
@@ -177,13 +186,15 @@ package com.flashdynamix.motion {
 			
 			queue.splice(index, 0, timeline);
 		}
-		/**
+
+		/**
 		 * Removes an animation from the sequence at the specified position.
 		 */
 		public function removeAt(index : int) : void {
 			queue.splice(index, 1);
 		}
-		/**
+
+		/**
 		 * Starts playing the TweensySequence.
 		 */
 		public function start() : void {
@@ -192,31 +203,36 @@ package com.flashdynamix.motion {
 			var i : int, len : int = queue.length;
 			for(i = 0;i < len; i++) tween.add(item(i));
 		}
-		/**
+
+		/**
 		 * Stops playing the TweensySequence.
 		 */
 		public function stop() : void {
 			tween.stopAll();
 		}
-		/**
+
+		/**
 		 * Pauses playback of the TweensySequence.
 		 */
 		public function pause() : void {
 			tween.pause();
 		}
-		/**
+
+		/**
 		 * Whether the TweensySequence is paused.
 		 */
 		public function get paused() : Boolean {
 			return tween.paused;
 		}
-		/**
+
+		/**
 		 * Resumes playback of the TweensySequence.
 		 */
 		public function resume() : void {
 			tween.resume();
 		}
-		public function yoyo() : void {
+
+		public function yoyo() : void {
 			var i : int, len : int = queue.length, delays : Array = [], timeline : TweensyTimeline;
 			
 			for(i = 0;i < len; i++) delays.unshift(item(i).delayStart);
@@ -232,7 +248,8 @@ package com.flashdynamix.motion {
 			repeatCount++;
 			start();
 		}
-		/**
+
+		/**
 		 * Plays a timeline animation at its start position.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#repeats
@@ -248,9 +265,8 @@ package com.flashdynamix.motion {
 			repeatCount++;
 			start();
 		}
-		public function set smartRotate(flag : Boolean) : void {			tween.smartRotate = flag;
-		}		/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get smartRotate() : Boolean {			return tween.smartRotate;		}		public function set snapToClosest(flag : Boolean) : void {			tween.snapToClosest = flag;		}		/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapToClosest() : Boolean {			return tween.snapToClosest;		}
-		/**
+
+		/**
 		 * Defines whether the TweensyTimeline repeats.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#repeats
@@ -259,9 +275,10 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyTimeline#YOYO
 		 * @see com.flashdynamix.motion.TweensyTimeline#REPLAY
 		 */		public function get canRepeat() : Boolean {
-			return (repeatType != TweensyTimeline.NONE && (repeatCount < repeats || repeats == -1));
+			return (repeatType != TweenStyle.NONE && (repeatCount < repeats || repeats == -1));
 		}
-		/**
+
+		/**
 		 * The timing system currently in use.<BR>
 		 * This can be either :
 		 * <ul>
@@ -275,16 +292,20 @@ package com.flashdynamix.motion {
 		 */		public function set refreshType(type : String) : void {
 			tween.refreshType = type;
 		}
-		public function get refreshType() : String {
+
+		public function get refreshType() : String {
 			return tween.refreshType;
-		}		public function get duration() : Number {			if(last) return 0;			return last.duration;		}		private function item(index : int) : TweensyTimeline {			return queue[index];		}
-		private function done() : void {
+		}
+		public function get duration() : Number {			if(last) return 0;			return last.duration;		}
+		private function item(index : int) : TweensyTimeline {			return queue[index];		}
+
+		private function done() : void {
 			if(canRepeat) {
 				switch(repeatType) {
-					case TweensyTimeline.YOYO :  
+					case TweenStyle.YOYO :  
 						yoyo();
 						break;
-					case TweensyTimeline.REPLAY : 
+					case TweenStyle.REPLAY : 
 						replay();
 						break;
 				}
@@ -292,10 +313,12 @@ package com.flashdynamix.motion {
 				if(onComplete != null) onComplete.apply(this, onCompleteParams);
 			}
 		}
-		private function get last() : TweensyTimeline {
+
+		private function get last() : TweensyTimeline {
 			return item(queue.length - 1);
 		}
-		/**
+
+		/**
 		 * Disposes the TweensySequence Class ready for garbage collection.
 		 */
 		public function dispose() : void {

@@ -2,7 +2,7 @@ package com.flashdynamix.motion.layers {
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
-	
+
 	import com.flashdynamix.motion.effects.IEffect;
 	import com.flashdynamix.motion.effects.core.DrawEffect;	
 
@@ -31,7 +31,7 @@ package com.flashdynamix.motion.layers {
 		 * Whether the BitmapData uses transparency.
 		 */
 		public var transparent : Boolean = false;
-		
+
 		private var running : Boolean = false;
 		private var _scale : Number = 1;
 
@@ -96,6 +96,17 @@ package com.flashdynamix.motion.layers {
 
 		public function get layerHeight() : int {
 			return bitmapData.height;
+		}
+
+		public function get rect() : Rectangle {
+			return bitmapData.rect;
+		}
+
+		public function get mtx() : Matrix {
+			var matrix : Matrix = new Matrix();
+			matrix.scale(1 / _scale, 1 / _scale);
+			
+			return matrix;
 		}
 
 		/**

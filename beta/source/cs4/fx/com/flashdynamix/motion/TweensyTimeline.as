@@ -12,6 +12,7 @@
 ............................................................
  */
 package com.flashdynamix.motion {
+	import com.flashdynamix.motion.data.*;
 	import com.flashdynamix.motion.plugins.AbstractTween;
 	import com.flashdynamix.motion.plugins.TweensyPluginList;	
 
@@ -33,35 +34,19 @@ package com.flashdynamix.motion {
 	 * without all the fussiness of Event listeners.
 	 */
 	public class TweensyTimeline {
-		/**
-		 * @see com.flashdynamix.motion.TweensyTimeline#repeatType
-		 */
-		public static const YOYO : String = "yoyo";
-		/**
-		 * @see com.flashdynamix.motion.TweensyTimeline#repeatType
-		 */
-		public static const REPLAY : String = "replay";
-		/**
-		 * @see com.flashdynamix.motion.TweensyTimeline#repeatType
-		 */
-		public static const LOOP : String = "loop";
-		/**
-		 * @see com.flashdynamix.motion.TweensyTimeline#repeatType
-		 */
-		public static const NONE : String = null;
+
 		/**
 		 * The default tween which will be used when none is provided using a to, from and fromTo method.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#ease TweensyTimeline.ease
 		 */
-		public static var defaultTween : Function = easeOut;
-		private static var defaultArgs : Array = [0, 0, 1, 0];
+		private static var defaultArgs : Array = [0, 0, 1, 0.5];
 		/**
 		 * Defines the ease equation you would like to use. By default this is Quintic.easeOut or the defaultTween.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#defaultTween
 		 */
-		public var ease : Function = defaultTween;
+		public var ease : Function;
 		/**
 		 * Defines the delay in seconds at the start of the animation.<BR>
 		 * By default this value is 0 seconds.
@@ -89,7 +74,7 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyTimeline#REPLAY
 		 * @see com.flashdynamix.motion.TweensyTimeline#LOOP
 		 */
-		public var repeatType : String;
+		public var repeatType : int = -1;
 		/**
 		 * The number of repeats to use. If -1 is used then the animation will repeat indefinitely.
 		 * 
@@ -104,6 +89,7 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyTimeline#repeatType
 		 */
 		public var repeatCount : int = 0;
+
 		/**
 		 * This contains a list of ease Functions to use on each repeat for the tween animation.<BR>
 		 * i.e. [Quintic.easeIn, Quintic.easeOut]<BR>
@@ -123,15 +109,27 @@ package com.flashdynamix.motion {
 		/**
 		 * Whether the tweens contained within the TweensyTimeline class will snap tweened properties to the closest whole number.
 		 */
-		public var snapToClosest : Boolean = false;
+		public var snapClosest : Boolean = false;
 		public var autoHide : Boolean = false;
 
+		/**
+		 * Executed on each update to the TweensyTimeline animation.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onUpdateParams
+		 */
+		public var onUpdate : Function;
 		/**
 		 * Parameters applied to the onUpdate Function.
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#onUpdate
 		 */
 		public var onUpdateParams : Array;
+		/**
+		 * Executed when the TweensyTimeline animation is complete.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onCompleteParams
+		 */
+		public var onComplete : Function;
 		/**
 		 * Parameters applied to the onComplete Function.
 		 * 
@@ -143,6 +141,12 @@ package com.flashdynamix.motion {
 		 * 
 		 * @see com.flashdynamix.motion.TweensyTimeline#onRepeat
 		 */
+		/**
+		 * Executed when the TweensyTimeline animation repeats.
+		 * 
+		 * @see com.flashdynamix.motion.TweensyTimeline#onRepeatParams
+		 */
+		public var onRepeat : Function;
 		public var onRepeatParams : Array;
 
 		/** @private */
@@ -152,19 +156,18 @@ package com.flashdynamix.motion {
 		/** @private */
 		internal var previous : TweensyTimeline;
 
-		private var _onComplete : Function;		private var _onRepeat : Function;		private var _onUpdate : Function;
-		private var hasEvents : Boolean = false;
 		private var _instances : Vector.<Object>; 
 		private var _tweens : int = 0;
 		private var _time : Number = 0;
 		private var args : Array = defaultArgs.concat();
-		private var _duration : Number;
+		private var _duration : Number = 0.5;
 		private var list : Vector.<AbstractTween>;
 		private var disposed : Boolean = false;
 
 		public function TweensyTimeline() {
 			list = new Vector.<AbstractTween>();
 			_instances = new Vector.<Object>();
+			ease = TweenStyle.defaultTween;
 		}
 
 		/**
@@ -178,8 +181,8 @@ package com.flashdynamix.motion {
 		 * For example <code>timeline.to(new DropShadowFilter(), {alpha:0}, myDisplayItem);</code><BR>
 		 * Will apply the tweening DropShadowFilter onto the DisplayObject <code>'myDisplayItem'</code>.
 		 */
-		public function to(instance : Object, toObj : Object, update : Object = null) : void {
-			add(instance, update).toTarget(toObj);
+		public function to(instance : Object, toObj : Object, applyInstance : Object = null) : void {
+			add(instance, applyInstance).toTarget(toObj);
 		}
 
 		/**
@@ -193,8 +196,8 @@ package com.flashdynamix.motion {
 		 * For example <code>timeline.from(new DropShadowFilter(), {alpha:0}, myDisplayItem);</code><BR>
 		 * Will apply the tweening DropShadowFilter onto the DisplayObject <code>'myDisplayItem'</code>.
 		 */
-		public function from(instance : Object, fromObj : Object, update : Object = null) : void {
-			add(instance, update).fromTarget(fromObj);
+		public function from(instance : Object, fromObj : Object, applyInstance : Object = null) : void {
+			add(instance, applyInstance).fromTarget(fromObj);
 		}
 
 		/**
@@ -210,8 +213,22 @@ package com.flashdynamix.motion {
 		 * For example <code>timeline.fromTo(new DropShadowFilter(), {alpha:0}, {alpha:1}, myDisplayItem)</code><BR>
 		 * Will apply the tweening DropShadowFilter onto the DisplayObject <code>'myDisplayItem'</code>
 		 */
-		public function fromTo(instance : Object, fromObj : Object, toObj : Object, update : Object = null) : void {
-			add(instance, update).fromToTarget(fromObj, toObj);
+		public function fromTo(instance : Object, fromObj : Object, toObj : Object, applyInstance : Object = null) : void {
+			add(instance, applyInstance).fromToTarget(fromObj, toObj);
+		}
+
+		public function animate(instance : Object, target : TweenTarget, applyInstance : Object = null) : void {
+			switch(target.type) {
+				case TweenTarget.FROM :
+					add(instance, applyInstance).fromTarget(target.from);
+					break;
+				case TweenTarget.TO :
+					add(instance, applyInstance).toTarget(target.from);
+					break;
+				case TweenTarget.FROM_TO :
+					add(instance, applyInstance).fromToTarget(target.from, target.to);
+					break;
+			}
 		}
 
 		/**
@@ -277,46 +294,41 @@ package com.flashdynamix.motion {
 		public function update(secs : Number) : void {
 			_time += secs;
 			
-			var played : Number = _time - delayStart, done : Boolean, position : Number, tween : AbstractTween;
+			var played : Number = _time - delayStart;
 			
 			if(played > 0) {
 				
-				done = finished;
+				var position : Number, tween : AbstractTween;
+				
 				args[0] = (played > _duration) ? _duration : played;
 				position = ease.apply(null, args);
 				
 				for each(tween in list) tween.update(position);
+					
+				if(onUpdate != null) onUpdate.apply(null, onUpdateParams);
 				
-				if(hasEvents) {
-					if(onUpdate != null) {
-						onUpdate.apply(null, onUpdateParams);
-						done = finished;
-					}
-				
-					if(done) {
-						if(onComplete != null) {
-							onComplete.apply(null, onCompleteParams);
-							done = finished;
-						}
-					}
-				}
-				
-				if(done) {
-					if(canRepeat) {
-						if(repeatType == YOYO) {
-							yoyo();
-						} else if(repeatType == REPLAY) {
-							replay();
-						} else if(repeatType == LOOP) {
-							loop();
-						}
+				if(finished) {
+					
+					if(repeatType == TweenStyle.NONE) {
+						if(onComplete != null) onComplete.apply(null, onCompleteParams);
 						
-						if(hasEvents && onRepeat != null) {
-							onRepeat.apply(null, onRepeatParams);
-							done = finished && !canRepeat;
-						}
+						if(finished) manager.remove(this);
 					} else {
-						manager.remove(this);
+						if(canRepeat) {
+							if(repeatType == TweenStyle.YOYO) {
+								yoyo();
+							} else if(repeatType == TweenStyle.REPLAY) {
+								replay();
+							} else if(repeatType == TweenStyle.LOOP) {
+								loop();
+							}
+							
+							if(onRepeat != null) onRepeat.apply(null, onRepeatParams);
+						} else {
+							if(onComplete != null) onComplete.apply(null, onCompleteParams);
+							
+							if(finished) manager.remove(this);
+						}
 					}
 				}
 			}
@@ -379,11 +391,22 @@ package com.flashdynamix.motion {
 			doRepeat();
 		}
 
+		public function set style(style : TweenStyle) : void {
+			this.duration = style.duration;
+			this.ease = style.ease;
+			this.easeParams = style.easeParams;
+			this.delayStart = style.delayStart;
+			this.delayEnd = style.delayEnd;
+			this.repeats = style.repeats;
+			this.repeatType = style.repeatType;			this.repeatEase = style.repeatEase;			
+			this.smartRotate = style.smartRotate;			this.autoHide = style.autoHide;			this.snapClosest = style.snapClosest;
+		}
+
 		/**
 		 * Defines whether the TweensyTimeline repeats.
 		 */
 		public function get canRepeat() : Boolean {
-			return (repeatType != NONE && (repeats == -1 || repeatCount < repeats));
+			return (repeatType != TweenStyle.NONE && (repeats == -1 || repeatCount < repeats));
 		}
 
 		public function set position(index : Number) : void {
@@ -471,48 +494,6 @@ package com.flashdynamix.motion {
 			return _instances;
 		}
 
-		/**
-		 * Executed on each update to the TweensyTimeline animation.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onUpdateParams
-		 */
-		public function set onUpdate(func : Function) : void {
-			hasEvents = (func == null) ? false : true;
-			_onUpdate = func;
-		}
-
-		public function get onUpdate() : Function {
-			return _onUpdate;
-		}
-
-		/**
-		 * Executed when the TweensyTimeline animation is complete.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onCompleteParams
-		 */
-		public function set onComplete(func : Function) : void {
-			hasEvents = (func == null) ? false : true;
-			_onComplete = func;
-		}
-
-		public function get onComplete() : Function {
-			return _onComplete;
-		}
-
-		/**
-		 * Executed when the TweensyTimeline animation repeats.
-		 * 
-		 * @see com.flashdynamix.motion.TweensyTimeline#onRepeatParams
-		 */
-		public function set onRepeat(func : Function) : void {
-			hasEvents = (func == null) ? false : true;
-			_onRepeat = func;
-		}
-
-		public function get onRepeat() : Function {
-			return _onRepeat;
-		}
-
 		/** @private */
 		internal function removeOverlap(timeline : TweensyTimeline) : void {
 			if(this != timeline && intersects(timeline)) {
@@ -553,15 +534,14 @@ package com.flashdynamix.motion {
 			onCompleteParams = null;
 			onRepeat = null;
 			onRepeatParams = null;
-			_onComplete = null;
 			
 			_tweens = 0;
 			_instances.length = 0;
 			list.length = 0;
-			ease = defaultTween;
+			ease = TweenStyle.defaultTween;
 			delayStart = 0;
 			delayEnd = 0;
-			repeatType = NONE;
+			repeatType = -1;
 			repeats = -1;
 			repeatEase = null;
 			disposed = false;
@@ -569,14 +549,13 @@ package com.flashdynamix.motion {
 			repeatCount = 0;
 		}
 
-		private function add(instanceObj : Object, updateObj : Object = null) : AbstractTween {
-			var tween : AbstractTween = TweensyPluginList.checkOut(instanceObj);
+		private function add(instance : Object, applyInstance : Object = null) : AbstractTween {
+			var tween : AbstractTween = TweensyPluginList.checkOut(instance);
 			
 			tween.timeline = this;
-			tween.construct(instanceObj, updateObj);
+			tween.construct(instance, applyInstance);
 			
 			_instances[_instances.length] = tween.instance;
-			
 			list[_tweens++] = tween;
 			
 			if(manager) manager.addInstance(tween.instance, this);
@@ -589,9 +568,7 @@ package com.flashdynamix.motion {
 			TweensyPluginList.checkIn(tween);
 			
 			_instances.splice(_instances.indexOf(tween.instance), 1);
-			
 			list.splice(list.indexOf(tween), 1);
-			
 			_tweens--;
 			
 			if(manager) manager.removeInstance(tween.instance, this);
@@ -610,10 +587,6 @@ package com.flashdynamix.motion {
 
 		public static function empty() : void {
 			TweensyPluginList.empty();
-		}
-
-		private static function easeOut(t : Number, b : Number, c : Number, d : Number) : Number {
-			return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
 		}
 
 		/**

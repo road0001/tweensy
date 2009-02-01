@@ -114,7 +114,7 @@ package com.flashdynamix.utils {
 		public static function get averageFps() : Number {
 			return totalCount / runningTime;
 		}
-		
+
 		public static function show() : void {
 			ci.caption = "Hide Profiler";
 			displayed = true;
@@ -170,7 +170,7 @@ package com.flashdynamix.utils {
 
 		private static function updateDisplay() : void {
 			updateMinMax();
-			content.update(runningTime, minFps, maxFps, minMem, maxMem, currentFps, currentMem, averageFps, fpsList, memList, history);
+			content.update(runningTime, stage.frameRate, minFps, maxFps, minMem, maxMem, currentFps, currentMem, averageFps, fpsList, memList, history);
 		}
 
 		private static function updateMinMax() : void {
@@ -266,7 +266,7 @@ internal class ProfilerContent extends Sprite {
 		this.addEventListener(Event.REMOVED_FROM_STAGE, removed, false, 0, true);
 	}
 
-	public function update(runningTime : Number, minFps : Number, maxFps : Number, minMem : Number, maxMem : Number, currentFps : Number, currentMem : Number, averageFps : Number, fpsList : Array, memList : Array, history : int) : void {
+	public function update(runningTime : Number, actualFps : Number, minFps : Number, maxFps : Number, minMem : Number, maxMem : Number, currentFps : Number, currentMem : Number, averageFps : Number, fpsList : Array, memList : Array, history : int) : void {
 		if(runningTime >= 1) {
 			minFpsTxtBx.text = minFps.toFixed(3) + " Fps";
 			maxFpsTxtBx.text = maxFps.toFixed(3) + " Fps";
@@ -274,7 +274,7 @@ internal class ProfilerContent extends Sprite {
 			maxMemTxtBx.text = maxMem.toFixed(3) + " Mb";
 		}
 			
-		infoTxtBx.text = "Current Fps " + currentFps.toFixed(3) + "   |   Average Fps " + averageFps.toFixed(3) + "   |   Memory Used " + currentMem.toFixed(3) + " Mb";
+		infoTxtBx.text = "Current " + currentFps.toFixed(3) + "   Average " + averageFps.toFixed(3) + "   Actual " + actualFps.toString() + " Fps   |   Memory Used " + currentMem.toFixed(3) + " Mb";
 		infoTxtBx.x = stage.stageWidth - infoTxtBx.width - 20;
 		
 		var vec : Graphics = fps.graphics;
