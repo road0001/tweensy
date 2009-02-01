@@ -52,12 +52,13 @@ package com.flashdynamix.motion.plugins {
 			if(_current.hasOwnProperty("length")) {
 				
 				var item : Object;
-				for(var i:String in toObj) {
-					item = toObj[i];
-					if(!(item is Number) || !(item is String)) {
-						timeline.to(item, toObj, updateObject);
-					} else {
+				for(var i:String in current) {
+					item = current[i];
+					
+					if(item is Number || item is String) {
 						addTo(i, toObj[i]);
+					} else {
+						timeline.to(current[i], toObj, updateObject);
 					}
 				}
 			} else {
@@ -69,12 +70,14 @@ package com.flashdynamix.motion.plugins {
 			if(_current.hasOwnProperty("length")) {
 				
 				var item : Object;
-				for(var i:String in fromObj) {
-					item = fromObj[i];
-					if(!(item is Number) || !(item is String)) {
-						timeline.from(item, fromObj, updateObject);
-					} else {
+				for(var i:String in current) {
+					
+					item = current[i];
+					
+					if(item is Number || item is String) {
 						addFrom(i, fromObj[i]);
+					} else {
+						timeline.from(current[i], fromObj, updateObject);
 					}
 				}
 			
@@ -88,12 +91,14 @@ package com.flashdynamix.motion.plugins {
 			if(_current.hasOwnProperty("length")) {
 				
 				var item : Object;
-				for(var i:String in fromObj) {
-					item = fromObj[i];
-					if(!(item is Number) || !(item is String)) {
-						timeline.fromTo(item, fromObj, toObj, updateObject);
-					} else {
+				for(var i:String in current) {
+					
+					item = current[i];
+					
+					if(item is Number || item is String) {
 						addFromTo(i, fromObj[i], toObj[i]);
+					} else {
+						timeline.fromTo(current[i], fromObj, toObj, updateObject);
 					}
 				}
 			
