@@ -18,10 +18,10 @@ package com.flashdynamix.motion.plugins {
 			_from = {};
 		}
 
-		override public function construct(currentObj : Object, updateObj : Object) : void {
+		override public function construct(instance : Object, applyToInstance : Object) : void {
 			inited = false;
-			_current = currentObj;
-			updateObject = updateObj;
+			_current = instance;
+			updateObject = applyToInstance;
 		}
 
 		override protected function set to(item : Object) : void {
@@ -50,11 +50,14 @@ package com.flashdynamix.motion.plugins {
 
 		override public function toTarget(toObj : Object) : void {
 			if(_current.hasOwnProperty("length")) {
-				for(var i : int = 0;i < _current.length; i++) {
-					if(!(_current[i] is Number) || !(_current[i] is String)) {
-						timeline.to(_current[i], toObj, updateObject);
+				
+				var item : Object;
+				for(var i:String in toObj) {
+					item = toObj[i];
+					if(!(item is Number) || !(item is String)) {
+						timeline.to(item, toObj, updateObject);
 					} else {
-						addTo(i.toString(), toObj[i]);
+						addTo(i, toObj[i]);
 					}
 				}
 			} else {
@@ -64,11 +67,14 @@ package com.flashdynamix.motion.plugins {
 
 		override public function fromTarget(fromObj : Object) : void {
 			if(_current.hasOwnProperty("length")) {
-				for(var i : int = 0;i < _current.length; i++) {
-					if(!(_current[i] is Number) || !(_current[i] is String)) {
-						timeline.from(_current[i], fromObj, updateObject);
+				
+				var item : Object;
+				for(var i:String in fromObj) {
+					item = fromObj[i];
+					if(!(item is Number) || !(item is String)) {
+						timeline.from(item, fromObj, updateObject);
 					} else {
-						addFrom(i.toString(), fromObj[i]);
+						addFrom(i, fromObj[i]);
 					}
 				}
 			
@@ -80,11 +86,14 @@ package com.flashdynamix.motion.plugins {
 
 		override public function fromToTarget(fromObj : Object, toObj : Object) : void {
 			if(_current.hasOwnProperty("length")) {
-				for(var i : int = 0;i < _current.length; i++) {
-					if(!(_current[i] is Number) || !(_current[i] is String)) {
-						timeline.fromTo(_current[i], fromObj, toObj, updateObject);
+				
+				var item : Object;
+				for(var i:String in fromObj) {
+					item = fromObj[i];
+					if(!(item is Number) || !(item is String)) {
+						timeline.fromTo(item, fromObj, toObj, updateObject);
 					} else {
-						addFromTo(i.toString(), fromObj[i], toObj[i]);
+						addFromTo(i, fromObj[i], toObj[i]);
 					}
 				}
 			
@@ -110,7 +119,7 @@ package com.flashdynamix.motion.plugins {
 				
 				_current[propName] = from[propName] * q + to[propName] * position;
 				
-				if(timeline.snapToClosest) _current[propName] = Math.round(_current[propName]);
+				if(timeline.snapClosest) _current[propName] = Math.round(_current[propName]);
 			}
 		}
 
