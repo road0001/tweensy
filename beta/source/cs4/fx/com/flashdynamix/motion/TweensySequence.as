@@ -75,7 +75,7 @@ package com.flashdynamix.motion {
 		public function TweensySequence() {
 			queue = [];
 			
-			tween = new TweensyGroup(false, false);
+			tween = new TweensyGroup(false);
 			tween.onComplete = done;
 		}
 

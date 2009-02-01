@@ -2,18 +2,19 @@ package com.flashdynamix.motion.extras {
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
-	
+
 	import com.flashdynamix.motion.*;
 	import com.flashdynamix.motion.guides.Direction2D;
 	import com.flashdynamix.utils.MultiTypeObjectPool;
-	
+
 	import fl.motion.easing.*;	
 
 	/**
 	 * This is used as a particle emitter for Objects of a specified DisplayObject Class
 	 */
 	public class Emitter extends Sprite {
-		/**
+
+		/**
 		 * The distance in pixels to start the particle Object at.
 		 */
 		public var startDistance : Number = 0;
@@ -74,10 +75,12 @@ package com.flashdynamix.motion.extras {
 		 * The container Sprite for particles.
 		 */
 		public var holder : Sprite;
-		private var tween : TweensyGroup;
+
+		private var tween : TweensyGroup;
 		private var pool : MultiTypeObjectPool;
 		private var Particle : Class;
-		/**
+
+		/**
 		 * @param Particle The DisplayObject Class used to construct particles.
 		 * @param target Additional properties to tween during the particle's lifespan.<BR>
 		 * i.e. {scaleX:2, scaleY:2} would scale the DisplayObject by a factor of 2 over its lifespan.
@@ -109,34 +112,40 @@ package com.flashdynamix.motion.extras {
 			this.blendMode = blendMode;
 			
 			holder = new Sprite();
-			tween = new TweensyGroup(false, true);
+			tween = new TweensyGroup(true);
 			pool = new MultiTypeObjectPool(TweensyTimeline, Particle);
 			
 			start();
 		}
-		/**
+
+		/**
 		 * Sets the scale of the Emitter this affects the transform of the Emitter which is then applied.
 		 * to particles as they are created
 		 */
 		public function set scale(num : Number) : void {
 			this.scaleY = this.scaleX = num;
 		}
-		/**
+
+		/**
 		 * Gets the scale of the Emmitter.
 		 */
 		public function get scale() : Number {
 			return this.scaleY;
 		}
-		public function set secondsPerFrame(spf : Number) : void {
+
+		public function set secondsPerFrame(spf : Number) : void {
 			tween.secondsPerFrame = spf;
 		}
-		public function get secondsPerFrame() : Number {
+
+		public function get secondsPerFrame() : Number {
 			return tween.secondsPerFrame;
 		}
-		public function set refreshType(type : String) : void {
+
+		public function set refreshType(type : String) : void {
 			tween.refreshType = type;
 		}
-		/**
+
+		/**
 		 * The timing system currently in use.<BR>
 		 * This can be either :
 		 * <ul>
@@ -151,19 +160,22 @@ package com.flashdynamix.motion.extras {
 		public function get refreshType() : String {
 			return tween.refreshType;
 		}
-		/**
+
+		/**
 		 * Pauses all playing particle tweens.
 		 */
 		public function pause() : void {
 			tween.pause();
 		}
-		/**
+
+		/**
 		 * Resumes all paused particle tweens.
 		 */
 		public function resume() : void {
 			tween.resume();
 		}
-		/**
+
+		/**
 		 * Starts adding particle tweens on each ENTER_FRAME.
 		 */
 		public function start() : void {
@@ -171,7 +183,8 @@ package com.flashdynamix.motion.extras {
 			running = true;
 			addEvent(this, Event.ENTER_FRAME, draw);
 		}
-		/**
+
+		/**
 		 * Stops adding particle tweens on each ENTER_FRAME. Though doesnt stop current particle tweens.
 		 */
 		public function stop() : void {
@@ -180,16 +193,19 @@ package com.flashdynamix.motion.extras {
 			
 			removeEvent(this, Event.ENTER_FRAME, draw);
 		}
-		/**
+
+		/**
 		 * Clones the Emmitter and returns a new instance.
 		 */
 		public function clone() : Emitter {
 			return new Emitter(Particle, target, frequency, random, angle, distance, speed, blendMode);
 		}
-		private function draw(e : Event) : void {
+
+		private function draw(e : Event) : void {
 			if(random < Math.random() || tween.paused) return;
 			
 			var timeline : TweensyTimeline = pool.checkOut(TweensyTimeline);
+			timeline.conflictResolve = -1;
 			timeline.duration = speed;
 			timeline.ease = ease;
 			timeline.delayStart = delay;
@@ -218,7 +234,8 @@ package com.flashdynamix.motion.extras {
 				tween.add(timeline);
 			}
 		}
-		private function removeChildren(...items : Array) : void {
+
+		private function removeChildren(...items : Array) : void {
 			var len : int = items.length;
 			var item : DisplayObject;
 			var i : int;
@@ -230,13 +247,16 @@ package com.flashdynamix.motion.extras {
 				pool.checkIn(item);
 			}
 		}
-		protected function addEvent(item : EventDispatcher, type : String, liststener : Function, priority : int = 0, useWeakReference : Boolean = true) : void {
+
+		protected function addEvent(item : EventDispatcher, type : String, liststener : Function, priority : int = 0, useWeakReference : Boolean = true) : void {
 			item.addEventListener(type, liststener, false, priority, useWeakReference);
 		}
-		protected function removeEvent(item : EventDispatcher, type : String, listener : Function) : void {
+
+		protected function removeEvent(item : EventDispatcher, type : String, listener : Function) : void {
 			item.removeEventListener(type, listener);
 		}
-		/**
+
+		/**
 		 * Disposes the Emitter Class ready for garbage collection
 		 */
 		public function dispose() : void {
