@@ -41,6 +41,10 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyTimeline#ease TweensyTimeline.ease
 		 */
 		private static var defaultArgs : Array = [0, 0, 1, 0.5];
+
+		
+		public var conflictResolve : int = 0;
+
 		/**
 		 * Defines the ease equation you would like to use. By default this is Quintic.easeOut or the defaultTween.
 		 * 
@@ -223,7 +227,7 @@ package com.flashdynamix.motion {
 					add(instance, applyInstance).fromTarget(target.from);
 					break;
 				case TweenTarget.TO :
-					add(instance, applyInstance).toTarget(target.from);
+					add(instance, applyInstance).toTarget(target.to);
 					break;
 				case TweenTarget.FROM_TO :
 					add(instance, applyInstance).fromToTarget(target.from, target.to);
@@ -304,7 +308,7 @@ package com.flashdynamix.motion {
 				position = ease.apply(null, args);
 				
 				for each(tween in list) tween.update(position);
-					
+				
 				if(onUpdate != null) onUpdate.apply(null, onUpdateParams);
 				
 				if(finished) {
@@ -398,7 +402,8 @@ package com.flashdynamix.motion {
 			this.delayStart = style.delayStart;
 			this.delayEnd = style.delayEnd;
 			this.repeats = style.repeats;
-			this.repeatType = style.repeatType;			this.repeatEase = style.repeatEase;			
+			this.repeatType = style.repeatType;			this.repeatEase = style.repeatEase;
+			this.conflictResolve = style.conflictResolve;			
 			this.smartRotate = style.smartRotate;			this.autoHide = style.autoHide;			this.snapClosest = style.snapClosest;
 		}
 
