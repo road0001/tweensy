@@ -39,12 +39,6 @@
 
 		/**		 * Prepares the Tweensy Library for garbage collection by disposing its Object Pools and making it 		 * no longer usable in the Flash application.		 */		public static function empty() :  void {			TweensyGroup.empty();				TweensyTimeline.empty();
 		}
-				public static function set snapClosest (flag : Boolean) : void {			tween.snapClosest = flag;		}
-		/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public static function get snapClosest() : Boolean {			return tween.snapClosest;		}
-		public static function set smartRotate(flag : Boolean) : void {			tween.smartRotate = flag;		}
-		/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public static function get smartRotate() : Boolean {			return tween.smartRotate;		}
-		public static function set autoHide(flag : Boolean) : void {			tween.autoHide = flag;		}
-		public static function get autoHide() : Boolean {			return tween.autoHide;		}
 
 		/**		 * Whether the Tweensy Class is currently paused.		 */
 		public static function get paused() : Boolean {			return tween.paused;		}
