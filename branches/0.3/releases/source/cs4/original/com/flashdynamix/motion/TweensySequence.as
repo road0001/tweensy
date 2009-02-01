@@ -266,12 +266,6 @@ package com.flashdynamix.motion {
 			start();
 		}
 
-		public function set smartRotate(flag : Boolean) : void {			tween.smartRotate = flag;
-		}
-		/**		 * Whether the timelines contained within the TweensyGroup class will use smart rotation or not.<BR>		 * Using smart rotation will ensure that when tweening the 'rotation' property it will turn in the shortest rotation direction.<BR>		 * This fixes what may otherwise appear as a visual glitch even though mathimatically it is correct.		 */		public function get smartRotate() : Boolean {			return tween.smartRotate;		}
-		public function set snapClosest(flag : Boolean) : void {			tween.snapClosest = flag;		}
-		/**		 * Whether the timelines contained within the TweensyGroup class will snap tweened properties to the closest whole number.		 */		public function get snapClosest() : Boolean {			return tween.snapClosest;		}
-
 		/**
 		 * Defines whether the TweensyTimeline repeats.
 		 * 
