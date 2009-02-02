@@ -114,7 +114,7 @@
 							timeline.removeOverlap(item);
 						} else {
 							timeline.stop(instance);
-						}					}				}			}						if(!timelinesList) timelinesList = tweens[instance] = [];			timelinesList[timelinesList.length] = item;		}
+						}					}				}			}						if(!tweens[instance]) timelinesList = tweens[instance] = [];			timelinesList[timelinesList.length] = item;		}
 
 		internal function removeInstance(instance : Object, item : TweensyTimeline) : void {			var timelinesList : Array = tweens[instance];							if(timelinesList) {				var index : int = timelinesList.indexOf(item);				if(index != -1) {					if(timelinesList.length <= 1) {						tweens[instance].length = 0;					} else {						timelinesList.splice(index, 1);					}				}			}		}
 
