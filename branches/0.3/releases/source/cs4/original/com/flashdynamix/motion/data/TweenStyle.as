@@ -4,7 +4,8 @@ package com.flashdynamix.motion.data {
 		public static const YOYO : int = 0;
 		public static const REPLAY : int = 1;
 		public static const LOOP : int = 2;
-				public static const STOP_CONCURRENT : int = 0;		public static const STOP_ALL : int = 1;
+				public static const STOP_CONCURRENT : int = 0;		public static const STOP_ANY : int = 1;
+		public static const UPDATE_CURRENT : int = 2;
 				public static const NONE : int = -1;
 		public static var defaultTween : Function = easeOut;
 		public var conflictResolve : int = 0;
@@ -28,4 +29,4 @@ package com.flashdynamix.motion.data {
 			return (delayStart + duration + delayEnd);
 		}
 		public function clone() : TweenStyle {			return new TweenStyle(duration, ease, delayStart, _options);		}
-		private static function easeOut(t : Number, b : Number, c : Number, d : Number) : Number {			return c * ((t = t / d - 1) * t * t * t * t + 1) + b;		}	}}
+		private static function easeOut(t : Number, b : Number, c : Number, d : Number) : Number {			return -c * (t /= d) * (t - 2) + b;		}	}}
