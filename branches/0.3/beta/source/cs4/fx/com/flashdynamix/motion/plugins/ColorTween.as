@@ -2,10 +2,10 @@
 	/**	 * This plugin will be used when tweening ColorTransforms.	 */	public class ColorTween extends AbstractTween {		public static var key : Class = ColorTransform;		private var _current : ColorTransform;		protected var _to : ColorTransform;		protected var _from : ColorTransform;		/** @private */		internal var displayObject : DisplayObject;
 		public function ColorTween() {			_to = new ColorTransform();			_from = new ColorTransform();		}
 		override public function construct(instance : Object, applyToInstance : Object) : void {			inited = false;						_current = instance as ColorTransform;			displayObject = applyToInstance as DisplayObject;		}
-		override protected function set to(item : Object) : void {			_to = item as ColorTransform;		}
-		override protected function get to() : Object {			return _to;		}
-		override protected function set from(item : Object) : void {			_from = item as ColorTransform;		}
-		override protected function get from() : Object {			return _from;		}
+		override public function set to(item : Object) : void {			_to = item as ColorTransform;		}
+		override public function get to() : Object {			return _to;		}
+		override public function set from(item : Object) : void {			_from = item as ColorTransform;		}
+		override public function get from() : Object {			return _from;		}
 		override public function get current() : Object {			return _current;		}
 		override public function get instance() : Object {			return (displayObject) ? displayObject : current;		}
 		override protected function match(item : AbstractTween) : Boolean {			return (item is ColorTween && (current == item.current || ((item as ColorTween).displayObject == null || (item as ColorTween).displayObject == displayObject)) );		}

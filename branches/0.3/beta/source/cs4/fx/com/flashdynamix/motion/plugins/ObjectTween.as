@@ -24,19 +24,19 @@ package com.flashdynamix.motion.plugins {
 			updateObject = applyToInstance;
 		}
 
-		override protected function set to(item : Object) : void {
+		override public function set to(item : Object) : void {
 			_to = item;
 		}
 
-		override protected function get to() : Object {
+		override public function get to() : Object {
 			return _to;
 		}
 
-		override protected function set from(item : Object) : void {
+		override public function set from(item : Object) : void {
 			_from = item;
 		}
 
-		override protected function get from() : Object {
+		override public function get from() : Object {
 			return _from;
 		}
 

@@ -236,10 +236,7 @@ package com.flashdynamix.motion {
 		}
 
 		/**
-		 * Updates a tween for the instance Object to the new target properties defined in the to Object.<BR>
-		 * The value of this instance depends on wether the 'update' param is used i.e.<BR>
-		 * <code>timeline.to(new DropShadowFilter(), {alpha:0}, myDisplayItem);</code> the instance parameter will be myDisplayItem.<BR>
-		 * <code>timeline.to(new DropShadowFilter(), {alpha:0});</code> the instance parameter will be the filter
+		 * Updates a tween for the instance Object to the new target properties defined in the to Object.
 		 */
 		public function updateTo(instance : Object, to : Object) : void {
 			var position : Number = ease.apply(null, args);
@@ -515,7 +512,29 @@ package com.flashdynamix.motion {
 					}
 				}
 				
-				if(!hasTweens) manager.remove(this);
+				if(!hasTweens && manager) manager.remove(this);
+			}
+		}
+
+		/** @private */
+		internal function updateOverlap(timeline : TweensyTimeline) : void {
+			if(this != timeline && intersects(timeline)) {
+				
+				var tweenA : AbstractTween;
+				var tweenB : AbstractTween;
+				var i : int;
+				var position : Number = ease.apply(null, args);
+				
+				for (i = timeline.tweens - 1;i >= 0; i--) {
+					tweenA = timeline.list[i];
+					for each(tweenB in list) {
+						var updatedProps : Array = tweenB.updateOverlap(position, tweenA);
+						if(updatedProps != null) {
+							tweenA.stop.apply(null, updatedProps);
+							if(!tweenA.hasAnimations) timeline.remove(tweenA);
+						}
+					}
+				}
 			}
 		}
 
@@ -554,7 +573,8 @@ package com.flashdynamix.motion {
 			repeatCount = 0;
 		}
 
-		private function add(instance : Object, applyInstance : Object = null) : AbstractTween {
+		/** @private **/
+		internal function add(instance : Object, applyInstance : Object = null) : AbstractTween {
 			var tween : AbstractTween = TweensyPluginList.checkOut(instance);
 			
 			tween.timeline = this;
@@ -568,7 +588,8 @@ package com.flashdynamix.motion {
 			return tween;
 		}
 
-		private function remove(tween : AbstractTween) : void {
+		/** @private **/
+		internal function remove(tween : AbstractTween) : void {
 			tween.clear();
 			TweensyPluginList.checkIn(tween);
 			
