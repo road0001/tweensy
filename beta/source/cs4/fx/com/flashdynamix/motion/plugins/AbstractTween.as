@@ -10,28 +10,28 @@
 		protected var inited : Boolean = false;
 		public var timeline : TweensyTimeline;
 		/** @private */
-		internal var propNames : Vector.<String>;
+		internal var propNames : Array;
 		protected var _propCount : int = 0;
 
 		public function AbstractTween() {
-			propNames = new Vector.<String>();
+			propNames = [];
 		}
 
 		public function construct(currentObj : Object, updateObj : Object) : void {
 			inited = false;
 		}
 
-		protected function set to(item : Object) : void {
+		public function set to(item : Object) : void {
 		}
 
-		protected function get to() : Object {
+		public function get to() : Object {
 			return null;
 		}
 
-		protected function set from(item : Object) : void {
+		public function set from(item : Object) : void {
 		}
 
-		protected function get from() : Object {
+		public function get from() : Object {
 			return null;
 		}
 
@@ -49,6 +49,22 @@
 
 		public function get hasAnimations() : Boolean {
 			return (_propCount > 0);
+		}
+
+		public function get toProps() : Object {
+			var obj : Object = {};
+			
+			for each(var propName:String in propNames) obj[propName] = to[propName];
+			
+			return obj;
+		}
+		
+		public function get fromProps() : Object {
+			var obj : Object = {};
+			
+			for each(var propName:String in propNames) obj[propName] = from[propName];
+			
+			return obj;
 		}
 
 		public function toTarget(toObj : Object) : void {
@@ -75,29 +91,35 @@
 			apply();
 		}
 
-		public function updateTo(position : Number, item : Object) : void {
-			for(var propName:String in item) {
+		public function updateTo(position : Number, toObj : Object) : Array {
+			var updated : Array = [];
+			
+			for(var propName:String in toObj) {
 				if(has(propName)) {
-					var target : Number = item[propName];
+					var target : Number = translate(current[propName], toObj[propName]);
 					var change : Number = (target - current[propName]) * (1 / (1 - position));
 					
 					from[propName] = target - change;
 					to[propName] = target;
+					updated.push(propName);
 				}
 			}
+			
+			return updated;
 		}
 
 		public function removeOverlap(item : AbstractTween) : void {
 			if(match(item)) {
-				
-				var i : int;
-				var propName : String;
-				
-				for(i = item.properties - 1;i >= 0; i--) {
-					propName = item.propNames[i];
-					remove(propName);
-				}
+				stop.apply(null, item.propNames);
 			}
+		}
+
+		public function updateOverlap(position : Number, item : AbstractTween) : Array {
+			if(match(item)) {
+				return updateTo(position, item.toProps);
+			}
+			
+			return null;
 		}
 
 		public function stop(...props : Array) : void {
@@ -153,7 +175,7 @@
 
 		public function remove(propName : String) : void {
 			var index : int = propNames.indexOf(propName);
-			if(index >= 0) {
+			if(index != -1) {
 				propNames.splice(index, 1);
 				_propCount--;
 			}

@@ -4,7 +4,9 @@ package com.flashdynamix.motion.data {
 		public static const YOYO : int = 0;
 		public static const REPLAY : int = 1;
 		public static const LOOP : int = 2;
-				public static const STOP_CONCURRENT : int = 0;		public static const STOP_ALL : int = 1;		public static const NONE : int = -1;
+				public static const STOP_CONCURRENT : int = 0;		public static const STOP_ANY : int = 1;
+		public static const UPDATE_CURRENT : int = 2;
+				public static const NONE : int = -1;
 		public static var defaultTween : Function = easeOut;
 		public var conflictResolve : int = 0;
 		public var duration : Number = 0.5;		/**		 * Defines the ease equation you would like to use. By default this is Quintic.easeOut or the defaultTween.		 * 		 * @see com.flashdynamix.motion.TweenStyle#defaultTween		 */		public var ease : Function;		public var easeParams : Array = [];		/**		 * Defines the delay in seconds at the start of the animation.<BR>		 * By default this value is 0 seconds.		 */		public var delayStart : Number = 0;		/**		 * Defines the delay in seconds at the end of the animation.<BR>		 * By default this value is 0 seconds.		 */		public var delayEnd : Number = 0;		/**		 * The number of repeats to use. If -1 is used then the animation will repeat indefinitely.		 * 		 * @see com.flashdynamix.motion.TweenStyle#repeats		 * @see com.flashdynamix.motion.TweenStyle#repeatType		 */
@@ -27,4 +29,4 @@ package com.flashdynamix.motion.data {
 			return (delayStart + duration + delayEnd);
 		}
 		public function clone() : TweenStyle {			return new TweenStyle(duration, ease, delayStart, _options);		}
-		private static function easeOut(t : Number, b : Number, c : Number, d : Number) : Number {			return c * ((t = t / d - 1) * t * t * t * t + 1) + b;		}	}}
+		private static function easeOut(t : Number, b : Number, c : Number, d : Number) : Number {			return -c * (t /= d) * (t - 2) + b;		}	}}
