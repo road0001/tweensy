@@ -31,7 +31,7 @@ bmpLayer.draw(myInstance);</code>
 bmpLayer.add(new FilterEffect(new BlurFilter(5, 5)));
 bmpLayer.add(new ColorEffect(new ColorTransform(1, 1, 1, 0.9)));
 var emitter:Emitter = new Emitter(Particle, {scaleX:2, scaleY:2}, 5, 0.5, "-180, 180", "50, 100");
-bmpLayer.draw(bmpLayer.holder);</code>
+bmpLayer.draw(emitter.holder);</code>
 <p>This will emit the DisplayObject Particle 5 times every other frame. The particle has an angle range of -180 to 180 degrees to a distance between 50 to 100 pixels. During the lifespan of the Particle it will scale to double its initial size.</p>
 <br/>
 <p>Another important aspect about emitters is that it's Transform is applied onto the Particles it creates. So if you were to change the x,y, blendMode or alpha of the emitter this will be applied onto the Particles also.</p>
