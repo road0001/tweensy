@@ -1,5 +1,7 @@
 package com.flashdynamix.motion.plugins {
-	import com.flashdynamix.motion.TweensyTimeline;	
+	import flash.utils.getQualifiedClassName;
+
+	import com.flashdynamix.motion.TweensyTimeline;		
 
 	/**
 	 * This plugin is the default plugin and will be used when tweening Objects which don't have a custom plugin.
@@ -49,7 +51,7 @@ package com.flashdynamix.motion.plugins {
 		}
 
 		override public function toTarget(toObj : Object) : void {
-			if(_current.hasOwnProperty("length")) {
+			if(_current is Array || getQualifiedClassName(_current).indexOf("__AS3__.vec::Vector") != -1) {
 				
 				var item : Object;
 				for(var i:String in current) {
@@ -67,7 +69,7 @@ package com.flashdynamix.motion.plugins {
 		}
 
 		override public function fromTarget(fromObj : Object) : void {
-			if(_current.hasOwnProperty("length")) {
+			if(_current is Array || getQualifiedClassName(_current).indexOf("__AS3__.vec::Vector") != -1) {
 				
 				var item : Object;
 				for(var i:String in current) {
@@ -88,7 +90,7 @@ package com.flashdynamix.motion.plugins {
 		}
 
 		override public function fromToTarget(fromObj : Object, toObj : Object) : void {
-			if(_current.hasOwnProperty("length")) {
+			if(_current is Array || getQualifiedClassName(_current).indexOf("__AS3__.vec::Vector") != -1) {
 				
 				var item : Object;
 				for(var i:String in current) {

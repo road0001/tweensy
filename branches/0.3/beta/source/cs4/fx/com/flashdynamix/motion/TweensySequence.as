@@ -45,7 +45,7 @@ package com.flashdynamix.motion {
 		 * @see com.flashdynamix.motion.TweensyTimeline.REPLAY
 		 * @see com.flashdynamix.motion.TweensyTimeline.LOOP
 		 */
-		public var repeatType : String;
+		public var repeatType : int;
 		/**
 		 * The number of repeats to use. If -1 is used then the animation will repeat indefinitely.
 		 * 

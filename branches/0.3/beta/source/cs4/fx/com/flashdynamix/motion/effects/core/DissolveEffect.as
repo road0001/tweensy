@@ -1,15 +1,12 @@
 package com.flashdynamix.motion.effects.core {
 	import flash.display.BitmapData;
 	import flash.geom.*;
-
-	import com.flashdynamix.motion.effects.IEffect;	
-
-	/**
+	import com.flashdynamix.motion.effects.IEffect;	
+	/**
 	 * Applies a seeded Dissolve effect on to a BitmapData
 	 */
 	public class DissolveEffect implements IEffect {
-
-		/**
+		/**
 		 * The number of steps required to disolve a BitmapData from the original BitmapData to the destination BitmapData.
 		 */
 		public var steps : Number;
@@ -33,9 +30,8 @@ package com.flashdynamix.motion.effects.core {
 		/**
 		 * The position from which to draw the dissolve effect.
 		 */
-		public var point : Point = new Point( );
-		
-		/**
+		public var point : Point = new Point();
+		/**
 		 * @param destBmd This BitmapData is used for the dissolved pixels.<BR>
 		 * If you wish to dissolve to transparent pixels then create a BitmapData of transparent pixels.
 		 * @param steps The number of steps required to disolve a BitmapData from the origion BitmapData to the destination BitmapData.
@@ -49,11 +45,10 @@ package com.flashdynamix.motion.effects.core {
 			this.fillColor = fillColor;
 			this.destBmd = destBmd;
 		}
-
-		/**
+		/**
 		 * Renders the DissolveEffect on to the specified BitmapData.
 		 */		public function render(bmd : BitmapData) : void {
-			bmd.pixelDissolve( destBmd , bmd.rect , point , seed + (Math.random( ) * seedOffset) , (bmd.width * bmd.height) / steps , fillColor );
+			bmd.pixelDissolve(destBmd, bmd.rect, point, seed + (Math.random() * seedOffset), (bmd.width * bmd.height) / steps, fillColor);
 		}
 	}
 }
