@@ -91,6 +91,7 @@ package com.flashdynamix.motion.guides {
 		public function remove(pt : Point) : void {
 			var index : int = _pts.indexOf(pt);
 			if(index != -1) removeAt(index, 1);
+			update();
 		}
 
 		/**
@@ -165,7 +166,7 @@ package com.flashdynamix.motion.guides {
 			curve = [];
 			
 			if(through) {
-				var pt : Point = _pts[int(0)];
+				var pt : Point = _pts[0];
 				var cPt : Point;
 				
 				curve.push(pt);
