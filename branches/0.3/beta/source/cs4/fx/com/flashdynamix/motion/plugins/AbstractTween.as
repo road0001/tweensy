@@ -69,6 +69,7 @@
 
 		public function toTarget(toObj : Object) : void {
 			for(var propName:String in toObj) {
+				trace(propName);
 				addTo(propName, toObj[propName]);
 			}
 			
