@@ -105,7 +105,7 @@ package com.flashdynamix.utils {
 		 * @return The current amount of memory used by the SWF in MB.
 		 */
 		public static function get currentMem() : Number {
-			return (System.totalMemory / 1024) / 1000;
+			return System.totalMemory / 1024 / 1024;
 		}
 
 		/**
