@@ -57,7 +57,7 @@ Tweensy.secondsPerFrame = 1/30;</code>
 <code>import com.flashdynamix.motion.*;
 
 var timeline:TweensyTimeline = Tweensy.to(myInstance, {x:500});
-timeline.repeatType = Tweensy.YOYO;
+timeline.repeatType = TweensyTimeline.YOYO;
 timeline.repeats = 3;</code>
 <p>This will animate 'myInstance' from its current x position to an x position of 500 to and fro 3 times.</p>
 <hr/>
