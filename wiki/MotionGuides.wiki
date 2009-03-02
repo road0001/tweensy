@@ -23,9 +23,9 @@ import com.flashdynamix.motion.guides.Bezier2D;
 
 var tween:TweensyGroup = new TweensyGroup();
 var bezier:Bezier2D = new Bezier2D(myInstance, true, false, false);
-bezier.push(new Point(100, 100);
-bezier.push(new Point(200, 150);
-bezier.push(new Point(300, 100);
-bezier.push(new Point(400, 300);
+bezier.push(new Point(100, 100));
+bezier.push(new Point(200, 150));
+bezier.push(new Point(300, 100));
+bezier.push(new Point(400, 300));
 tween.to(bezier, {position:1});</code>
 <p>This will animate 'myInstance' along the bezier path defined from it's start position.</p>
