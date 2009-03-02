@@ -100,6 +100,7 @@ TweensyZero.onComplete = allAnimationsComplete;</code>
 <p>onUpdate will fire each time the timeline animation updates.<br/>
 onComplete will fire when the timeline animation is finished.</p>
 <code>import com.flashdynamix.motion.*;
+
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = animationComplete;
 timeline.onCompleteParams = new Array(myInstance);</code>
