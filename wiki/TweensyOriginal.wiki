@@ -137,7 +137,7 @@ onRepeat will fire when the timeline animation repeats.</p>
 
 var timeline:TweensyTimeline = Tweensy.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = animationComplete;
-timeline.onCompleteParams = [ myInstance ];</code>
+timeline.onCompleteParams = new Array(myInstance);</code>
 <p>To remove a onComplete or onUpdate event simply set it back to null.</p>
 <code>timeline.onComplete = null;</code>
 <p>Tweensy uses this method of applying event listeners rather than the Adobe Event Dispatcher as it allows for predefined parameters allowing for self removing tweens without all the fussiness of using the EventDispatcher first  i.e.</p>
@@ -145,7 +145,7 @@ timeline.onCompleteParams = [ myInstance ];</code>
 
 var timeline:TweensyTimeline = Tweensy.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = myInstance.parent.removeChild;
-timeline.onCompleteParams = [myInstance];</code>
+timeline.onCompleteParams = new Array(myInstance);</code>
 <hr/>
 <h2>Using TweensyGroup</h2>
 <p>TweensyGroup is the recommended implementation of tweening and offers all the functionality of Tweensy (and more) but doesn't provide it's functionality by static methods and properties. As the animations contained within the TweensyGroup instance are only the ones defined by this instance it provides a greater level of control over animations. This means TweensyGroup allows for stopping, pausing and setting specific refreshTypes which only effect this TweensyGroup instance.</p>
