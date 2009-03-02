@@ -31,5 +31,5 @@ Go to File > Publish settings > Flash > Settings<br/>
 Then choose the tab 'External library path' and click the plus icon and select the Tweensy.swc file.</p>
 <h2>Using the Tweensy Actionscript source code for CS3/CS4:</h2>
 <p>Go to File > Publish settings > Flash > Settings<br/>
-If you're using CS4 select the 'Source Path' tab or ignore this is using CS3<br/>
+If you're using CS4 select the 'Source Path' tab or ignore this step if using CS3<br/>
 Click the plus icon and select the folder containing the source code.</p>
