@@ -102,7 +102,7 @@ onComplete will fire when the timeline animation is finished.</p>
 <code>import com.flashdynamix.motion.*;
 var timeline:TweensyTimelineZero = TweensyZero.to(myInstance, {x:500}, 2.0);
 timeline.onComplete = animationComplete;
-timeline.onCompleteParams = [myInstance];</code>
+timeline.onCompleteParams = new Array(myInstance);</code>
 <p>To remove a onComplete or onUpdate event simply set it back to null.</p>
 <code>timeline.onComplete = null;</code>
 <p>Tweensy uses this method of applying event listeners rather than the Adobe Event Dispatcher this is because it allows for predefined parameters. This easily allows for self removing tweens without all the fussiness of using the EventDispatcher first  i.e.</p>
