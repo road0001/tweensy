@@ -74,9 +74,10 @@ package com.flashdynamix.motion.extras {
 		 * The container Sprite for particles.
 		 */
 		public var holder : Sprite;
+		
+		public var Particle : Class;
 		private var tween : TweensyGroup;
 		private var pool : MultiTypeObjectPool;
-		private var Particle : Class;
 		/**
 		 * @param Particle The DisplayObject Class used to construct particles.
 		 * @param target Additional properties to tween during the particle's lifespan.<BR>
@@ -110,7 +111,7 @@ package com.flashdynamix.motion.extras {
 			
 			holder = new Sprite();
 			tween = new TweensyGroup(false, true);
-			pool = new MultiTypeObjectPool(TweensyTimeline, Particle);
+			pool = new MultiTypeObjectPool(TweensyTimeline);
 			
 			start();
 		}
@@ -198,7 +199,7 @@ package com.flashdynamix.motion.extras {
 			var i : int;
 			
 			for(i = 0;i < frequency; i++) {
-				var item : DisplayObject = pool.checkOut(Particle) as DisplayObject;
+				var item : DisplayObject = new Particle();
 				
 				item.blendMode = this.blendMode;
 				item.transform = this.transform;
@@ -227,7 +228,6 @@ package com.flashdynamix.motion.extras {
 				item = items[i];
 				
 				holder.removeChild(item);
-				pool.checkIn(item);
 			}
 		}
 		protected function addEvent(item : EventDispatcher, type : String, liststener : Function, priority : int = 0, useWeakReference : Boolean = true) : void {

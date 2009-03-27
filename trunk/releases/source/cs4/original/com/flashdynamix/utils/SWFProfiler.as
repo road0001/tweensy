@@ -31,7 +31,7 @@ package com.flashdynamix.utils {
 		private static var content : ProfilerContent;
 		private static var ci : ContextMenuItem;
 				/**
-		 * Iniates the SWFProfiler to the ContextMenu of the reference passed.
+		 * Initiates the SWFProfiler to the ContextMenu of the reference passed.
 		 */
 		public static function init(context : InteractiveObject) : void {
 			if(inited) return;
