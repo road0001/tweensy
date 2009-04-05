@@ -28,7 +28,7 @@ SVN : http://tweensy.googlecode.com/svn/trunk/</p>
 <h2>Using the Tweensy SWC for CS4:</h2>
 <p>If you have Flash CS4 installed a SWC can be referenced from your FLA. <br/>
 Go to File > Publish settings > Flash > Settings<br/>
-Then choose the tab 'External library path' and click the plus icon and select the Tweensy.swc file.</p>
+Then choose the tab 'Library path' and click the plus icon and select the Tweensy.swc file.</p>
 <h2>Using the Tweensy Actionscript source code for CS3/CS4:</h2>
 <p>Go to File > Publish settings > Flash > Settings<br/>
 If you're using CS4 select the 'Source Path' tab or ignore this step if using CS3<br/>
